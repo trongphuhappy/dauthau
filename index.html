@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e3a8a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Đấu Thầu 340" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Học Nhanh 340 Câu Chứng Chỉ Đấu Thầu – Mẹo Nhớ & Thi Thử</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="brand">
+        <div class="brand-logo">340</div>
+        <div class="brand-text">
+          <h1>Ôn Thi Chứng Chỉ Nghiệp Vụ Đấu Thầu (340 Câu Cục Ban Hành)</h1>
+          <p>Học thuộc siêu tốc bằng Từ Khóa Vàng • Giải thích dễ hiểu • Thi thử xáo trộn câu (Cập nhật Luật 90/2025, NĐ 214/2025, TT 79 & 80/2025)</p>
+        </div>
+      </div>
+
+      <div class="header-stats-bar">
+        <span class="mini-stat success" onclick="openSpeedWithFilter('MASTERED')" style="cursor:pointer;" title="Số câu bạn đã đánh dấu thuộc lòng">
+          ✅ Thuộc: <strong id="hdr-mastered">0</strong>/340
+        </span>
+        <span class="mini-stat danger" onclick="openSpeedWithFilter('TRAP')" style="cursor:pointer;" title="Bấm để xem 72 câu bẫy dễ sai nhất">
+          🔥 72 Bẫy
+        </span>
+        <span class="mini-stat danger" onclick="openPracticeWithFilter('WRONG')" style="cursor:pointer;" title="Số câu bạn từng chọn sai">
+          ❌ Sai: <strong id="hdr-wrong">0</strong>
+        </span>
+        <span class="mini-stat warning" onclick="openSpeedWithFilter('BOOKMARKED')" style="cursor:pointer;" title="Số câu bạn đánh dấu sao">
+          ⭐ Lưu: <strong id="hdr-bookmarked">0</strong>
+        </span>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-sm btn-outline-primary" id="btn-mobile-view-toggle" title="Chuyển đổi giao diện Điện thoại / Máy tính">
+          📱 Giao diện Mobile
+        </button>
+        <button class="btn btn-sm btn-primary" id="btn-open-qr-modal" title="Quét mã QR hoặc tải bản Mobile Offline về điện thoại">
+          📲 Mở trên Điện thoại
+        </button>
+        <button class="btn btn-sm" id="btn-theme-toggle" title="Đổi giao diện Sáng / Tối">
+          🌙 Tối
+        </button>
+        <button class="btn btn-sm" id="btn-reset-progress" title="Xóa tiến độ học để học lại từ đầu">
+          🔄
+        </button>
+      </div>
+    </div>
+
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="tab-dashboard">
+        📊 Tổng Quan & Chủ Đề
+      </button>
+      <button class="nav-tab" data-tab="tab-tips">
+        💡 Bí Kíp & Mẹo Nhớ Nhanh <span class="nav-badge">HOT</span>
+      </button>
+      <button class="nav-tab" data-tab="tab-speed">
+        ⚡ Học Siêu Tốc 340 Câu
+      </button>
+      <button class="nav-tab" data-tab="tab-flashcard">
+        🗂️ Flashcard Lật Thẻ
+      </button>
+      <button class="nav-tab" data-tab="tab-practice">
+        🎯 Luyện Tập Từng Câu
+      </button>
+      <button class="nav-tab" data-tab="tab-exam">
+        📝 Thi Thử (Xáo Trộn Câu)
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container">
+    <!-- TAB 1: DASHBOARD -->
+    <section id="tab-dashboard" class="tab-panel active">
+      <div class="hero-banner">
+        <div class="hero-content">
+          <h2>Bí quyết thuộc làu 340 câu Đấu thầu trong thời gian ngắn nhất!</h2>
+          <p>
+            Hệ thống tích hợp đủ <strong>340 câu chuẩn của Cục Quản lý đấu thầu</strong> kèm theo <strong>Từ khóa vàng tô sáng</strong>, <strong>Mẹo ghi nhớ 3 giây</strong>, <strong>72 câu bẫy dễ sai nhất</strong> và <strong>Giải thích pháp lý dễ hiểu</strong>.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-lg btn-white" onclick="openSpeedWithFilter('TRAP')">
+              🔥 Học 72 Câu Bẫy Dễ Sai
+            </button>
+            <button class="btn btn-lg btn-glass" onclick="switchTab('tab-tips')">
+              💡 Bảng Mẹo Con Số & Bẫy
+            </button>
+            <button class="btn btn-lg btn-glass" onclick="startTrapExam()">
+              📝 Thi Thử 72 Câu Bẫy
+            </button>
+            <button class="btn btn-lg btn-glass" onclick="startQuickExam(60, 60)">
+              🏆 Thi Thử Chuẩn 60 Câu
+            </button>
+            <a class="btn btn-lg btn-glass" href="On_Thi_Dau_Thau_340_Mobile_Offline.html" download>
+              📱 Tải File App Mobile Offline
+            </a>
+            <a class="btn btn-lg btn-glass" href="3_Bo_72_Cau_Hoi_De_Sai_Va_Nhieu_Bay_Nhat.docx" download>
+              🔥 Word 72 Câu Bẫy (.docx)
+            </a>
+            <a class="btn btn-lg btn-glass" href="1_Tai_Lieu_Hoc_Ly_Thuyet_Va_Meo_Nho_340_Cau_Dau_Thau.docx" download>
+              📄 Word Lý Thuyết (.docx)
+            </a>
+            <a class="btn btn-lg btn-glass" href="2_Bo_De_Trac_Nghiem_340_Cau_In_Tiet_Kiem_Giay.docx" download>
+              🖨️ Word Trắc Nghiệm (.docx)
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card" onclick="openSpeedWithFilter('ALL')">
+          <div class="stat-card-header">
+            <span>Tổng Ngân Hàng</span>
+            <span>📚</span>
+          </div>
+          <div class="stat-card-value">340 câu</div>
+          <div class="stat-card-sub">Đủ mẹo nhớ & giải thích</div>
+        </div>
+
+        <div class="stat-card" onclick="openSpeedWithFilter('TRAP')" style="border-color: var(--danger-border); background: var(--danger-light);">
+          <div class="stat-card-header">
+            <span style="color:var(--danger)">Câu Dễ Sai & Bẫy Nhất</span>
+            <span>🔥</span>
+          </div>
+          <div class="stat-card-value" style="color:var(--danger)">72 câu</div>
+          <div class="stat-card-sub">Bấm để ôn riêng 72 câu bẫy</div>
+        </div>
+
+        <div class="stat-card" onclick="openSpeedWithFilter('MASTERED')">
+          <div class="stat-card-header">
+            <span>Đã Thuộc Lòng</span>
+            <span>✅</span>
+          </div>
+          <div class="stat-card-value" id="dash-mastered">0</div>
+          <div class="stat-card-sub" id="dash-mastered-pct">Chiếm 0% tổng số câu</div>
+        </div>
+
+        <div class="stat-card" onclick="openSpeedWithFilter('UNLEARNED')">
+          <div class="stat-card-header">
+            <span>Chưa Thuộc / Cần Ôn</span>
+            <span>⏳</span>
+          </div>
+          <div class="stat-card-value" id="dash-unlearned">340</div>
+          <div class="stat-card-sub">Bấm để lọc học câu chưa thuộc</div>
+        </div>
+
+        <div class="stat-card" onclick="openPracticeWithFilter('WRONG')">
+          <div class="stat-card-header">
+            <span>Câu Đang Làm Sai</span>
+            <span>❌</span>
+          </div>
+          <div class="stat-card-value" id="dash-wrong">0</div>
+          <div class="stat-card-sub">Bấm để luyện xoáy sâu câu sai</div>
+        </div>
+
+        <div class="stat-card" onclick="openSpeedWithFilter('BOOKMARKED')">
+          <div class="stat-card-header">
+            <span>Câu Đánh Dấu Sao</span>
+            <span>⭐</span>
+          </div>
+          <div class="stat-card-value" id="dash-bookmarked">0</div>
+          <div class="stat-card-sub">Các câu khó bạn đã lưu</div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title">📂 Học Theo 10 Chuyên Đề Trọng Tâm</div>
+      </div>
+      <div id="topics-grid-container" class="topics-grid"></div>
+
+      <div class="section-header">
+        <div class="section-title">📈 Lịch Sử Các Lần Thi Thử Gần Đây</div>
+        <button class="btn btn-sm" id="btn-clear-history">Xóa lịch sử</button>
+      </div>
+      <div id="exam-history-container"></div>
+    </section>
+
+    <!-- TAB 2: MASTER TIPS (BÍ KÍP & MẸO NHỚ NHANH) -->
+    <section id="tab-tips" class="tab-panel">
+      <div class="toolbar-card">
+        <div class="toolbar-row" style="justify-content: space-between;">
+          <div>
+            <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">
+              💡 Tổng Hợp Bí Kíp & Mẹo Ghi Nhớ Hệ Thống 340 Câu
+            </h2>
+            <p style="font-size: 13px; color: var(--text-secondary);">
+              Đọc kỹ 6 bảng quy luật dưới đây giúp bạn giải quyết nhanh hơn 200/340 câu chỉ trong 3 giây! <strong>Chạm vào từng nút [Câu #]</strong> để xem ngay câu hỏi đó.
+            </p>
+          </div>
+          <div class="search-input-wrap" style="max-width: 340px;">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="tips-search-input" class="input-control" placeholder="Tìm mẹo (VD: 500 triệu, 05 ngày, cấm thầu, bẫy...)" />
+          </div>
+        </div>
+      </div>
+
+      <div id="master-tips-container"></div>
+    </section>
+
+    <!-- TAB 3: SPEED STUDY (HỌC SIÊU TỐC 340 CÂU) -->
+    <section id="tab-speed" class="tab-panel">
+      <div class="toolbar-card collapsible-mobile expanded" id="speed-toolbar-card">
+        <button class="btn mobile-filter-toggle-btn" onclick="toggleMobileFilter('speed-toolbar-card')">
+          <span>🌪️ Bộ lọc & Chế độ Học Siêu Tốc</span>
+          <span>Ẩn/Hiện ▾</span>
+        </button>
+
+        <div class="toolbar-collapsible-body">
+          <div class="toolbar-row">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="speed-search" class="input-control" placeholder="Tìm số câu (VD: 104) hoặc từ khóa..." />
+            </div>
+
+            <select id="speed-topic-filter" class="select-control">
+              <option value="ALL">📂 Tất cả 10 chủ đề (340 câu)</option>
+            </select>
+
+            <select id="speed-range-filter" class="select-control">
+              <option value="ALL">🔢 Tất cả cụm câu (1 - 340)</option>
+              <option value="1-50">Cụm 1: Câu 1 – 50</option>
+              <option value="51-100">Cụm 2: Câu 51 – 100</option>
+              <option value="101-150">Cụm 3: Câu 101 – 150</option>
+              <option value="151-200">Cụm 4: Câu 151 – 200</option>
+              <option value="201-250">Cụm 5: Câu 201 – 250</option>
+              <option value="251-300">Cụm 6: Câu 251 – 300</option>
+              <option value="301-340">Cụm 7: Câu 301 – 340</option>
+            </select>
+
+            <select id="speed-status-filter" class="select-control">
+              <option value="ALL">📌 Mọi trạng thái (340 câu)</option>
+              <option value="TRAP">🔥 72 Câu Dễ Sai & Nhiều Bẫy Nhất</option>
+              <option value="UNLEARNED">⏳ Chưa thuộc</option>
+              <option value="MASTERED">✅ Đã thuộc lòng</option>
+              <option value="WRONG">❌ Câu hay làm sai</option>
+              <option value="BOOKMARKED">⭐ Câu đánh dấu sao</option>
+            </select>
+          </div>
+
+          <div class="toolbar-row" style="justify-content: space-between;">
+            <div class="mode-toggles">
+              <label class="toggle-pill active" id="pill-hl-keywords">
+                <input type="checkbox" id="chk-hl-keywords" checked style="display:none;" />
+                ✨ Tô sáng Từ Khóa
+              </label>
+
+              <label class="toggle-pill" id="pill-only-correct">
+                <input type="checkbox" id="chk-only-correct" style="display:none;" />
+                🎯 Chỉ hiện Đáp Án Đúng
+              </label>
+
+              <label class="toggle-pill" id="pill-recall-mask">
+                <input type="checkbox" id="chk-recall-mask" style="display:none;" />
+                🙈 Tự nhẩm (Che đáp án)
+              </label>
+
+              <button class="btn btn-sm" id="btn-speed-shuffle">
+                🔀 Xáo trộn
+              </button>
+            </div>
+
+            <div style="font-size: 13px; color: var(--text-secondary); font-weight: 600;">
+              Hiển thị: <strong id="speed-count-label">340</strong> câu
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="speed-list-container"></div>
+
+      <div class="pagination-bar" id="speed-pagination"></div>
+    </section>
+
+    <!-- TAB 4: FLASHCARDS (THẺ GHI NHỚ) -->
+    <section id="tab-flashcard" class="tab-panel">
+      <div class="toolbar-card">
+        <div class="toolbar-row" style="justify-content: space-between;">
+          <div style="display:flex; gap: 8px; flex-wrap: wrap; align-items: center; flex:1;">
+            <select id="fc-topic-filter" class="select-control" style="flex:1; min-width:160px;">
+              <option value="ALL">📂 Tất cả 10 chủ đề</option>
+            </select>
+
+            <select id="fc-status-filter" class="select-control" style="flex:1; min-width:160px;">
+              <option value="ALL">📌 Tất cả thẻ (340)</option>
+              <option value="TRAP">🔥 Chỉ 72 thẻ Câu Dễ Sai & Bẫy Nhất</option>
+              <option value="UNLEARNED">⏳ Chỉ thẻ Chưa thuộc</option>
+              <option value="WRONG">❌ Chỉ thẻ Hay sai</option>
+              <option value="BOOKMARKED">⭐ Chỉ thẻ Đánh dấu sao</option>
+              <option value="MASTERED">✅ Chỉ thẻ Đã thuộc</option>
+            </select>
+
+            <button class="btn btn-sm btn-outline-primary" id="btn-fc-shuffle">
+              🔀 Xáo trộn thẻ
+            </button>
+          </div>
+
+          <div style="font-size: 13.5px; font-weight: 800; color: var(--primary);">
+            Thẻ <span id="fc-index-label">1 / 340</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mobile-swipe-hint">
+        👆 Chạm vào thẻ để lật • Vuốt ngang Trái / Phải để chuyển thẻ tiếp theo
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard-stage">
+          <div class="flashcard-box" id="flashcard-box">
+            <!-- Dynamic Flashcard Content -->
+          </div>
+          <div class="fc-hint">
+            Phím tắt nhanh: <span class="kbd">Space</span> Lật thẻ • <span class="kbd">←</span> / <span class="kbd">→</span> Chuyển thẻ • <span class="kbd">1</span> Cần ôn lại • <span class="kbd">2</span> Đã thuộc lòng • <span class="kbd">S</span> Đánh dấu sao
+          </div>
+        </div>
+
+        <div class="fc-controls">
+          <button class="btn" id="btn-fc-prev">⬅️ Trước</button>
+          <button class="btn btn-outline-warning" id="btn-fc-learning">⏳ Cần ôn</button>
+          <button class="btn btn-primary" id="btn-fc-flip">🔄 Lật thẻ</button>
+          <button class="btn btn-success" id="btn-fc-mastered">✅ Đã thuộc!</button>
+          <button class="btn" id="btn-fc-next">Tiếp ➡️</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: INTERACTIVE PRACTICE (LUYỆN TẬP TỪNG CÂU) -->
+    <section id="tab-practice" class="tab-panel">
+      <div class="toolbar-card collapsible-mobile" id="prac-toolbar-card">
+        <button class="btn mobile-filter-toggle-btn" onclick="toggleMobileFilter('prac-toolbar-card')">
+          <span>🎯 Bộ lọc Luyện Tập (<strong id="mob-prac-stat-inline">Đúng: 0 | Sai: 0</strong>)</span>
+          <span>Đổi bộ lọc ▾</span>
+        </button>
+
+        <div class="toolbar-collapsible-body">
+          <div class="toolbar-row" style="justify-content: space-between;">
+            <div style="display:flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+              <select id="prac-topic-filter" class="select-control">
+                <option value="ALL">📂 Tất cả 10 chủ đề (340 câu)</option>
+              </select>
+
+              <select id="prac-range-filter" class="select-control">
+                <option value="ALL">🔢 Tất cả cụm câu (1 - 340)</option>
+                <option value="1-50">Cụm 1: Câu 1 – 50</option>
+                <option value="51-100">Cụm 2: Câu 51 – 100</option>
+                <option value="101-150">Cụm 3: Câu 101 – 150</option>
+                <option value="151-200">Cụm 4: Câu 151 – 200</option>
+                <option value="201-250">Cụm 5: Câu 201 – 250</option>
+                <option value="251-300">Cụm 6: Câu 251 – 300</option>
+                <option value="301-340">Cụm 7: Câu 301 – 340</option>
+              </select>
+
+              <select id="prac-status-filter" class="select-control">
+                <option value="ALL">📌 Tất cả câu hỏi</option>
+                <option value="TRAP">🔥 Chỉ 72 câu Dễ Sai & Bẫy Nhất</option>
+                <option value="UNLEARNED">⏳ Chỉ câu Chưa thuộc</option>
+                <option value="WRONG">❌ Chỉ câu Hay làm sai</option>
+                <option value="BOOKMARKED">⭐ Chỉ câu Đánh dấu sao</option>
+                <option value="MASTERED">✅ Chỉ câu Đã thuộc</option>
+              </select>
+
+              <label class="toggle-pill" id="pill-prac-shuffle-q">
+                <input type="checkbox" id="chk-prac-shuffle-q" style="display:none;" />
+                🔀 Xáo trộn câu
+              </label>
+
+              <label class="toggle-pill" id="pill-prac-shuffle-opt">
+                <input type="checkbox" id="chk-prac-shuffle-opt" style="display:none;" />
+                🎲 Xáo trộn đáp án
+              </label>
+            </div>
+
+            <div style="display:flex; align-items:center; gap: 8px;">
+              <span style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">
+                Đúng: <strong id="prac-score-correct" style="color:var(--success)">0</strong> |
+                Sai: <strong id="prac-score-wrong" style="color:var(--danger)">0</strong>
+              </span>
+              <button class="btn btn-sm" id="btn-prac-reset-session">Làm mới</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mobile-swipe-hint">
+        👆 Chạm chọn đáp án A/B/C/D • Vuốt ngang Trái / Phải để chuyển câu
+      </div>
+
+      <div class="exam-layout">
+        <div id="prac-question-area"></div>
+
+        <aside class="exam-sidebar">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 style="font-size:14.5px; font-weight:800;">Bảng Câu Hỏi Luyện Tập</h3>
+            <span id="prac-progress-text" style="font-size:12.5px; color:var(--text-muted); font-weight:600;">1 / 340</span>
+          </div>
+          <div id="prac-palette" class="palette-grid"></div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">
+            💡 <strong>Mẹo thao tác nhanh:</strong> Bấm phím <span class="kbd">A</span> <span class="kbd">B</span> <span class="kbd">C</span> <span class="kbd">D</span> hoặc <span class="kbd">1</span> <span class="kbd">2</span> <span class="kbd">3</span> <span class="kbd">4</span> để chọn đáp án; bấm <span class="kbd">Enter</span> hoặc <span class="kbd">→</span> để sang câu kế tiếp.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TAB 6: EXAM MODE (THI THỬ & KIỂM TRA XÁO TRỘN CÂU) -->
+    <section id="tab-exam" class="tab-panel">
+      <!-- Exam Setup View -->
+      <div id="exam-setup-view">
+        <div class="toolbar-card" style="padding: 20px;">
+          <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 6px;">
+            📝 Phòng Thi Thử & Kiểm Tra Xáo Trộn Câu Hỏi
+          </h2>
+          <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 16px;">
+            Chọn một chế độ đề thi chuẩn dưới đây hoặc tự cấu hình đề kiểm tra theo ý muốn.
+          </p>
+
+          <div class="stats-grid" style="margin-bottom: 20px;">
+            <div class="stat-card" style="border-color: var(--primary-border); background: var(--primary-light);" onclick="startQuickExam(60, 60, 'ALL', true)">
+              <div class="stat-card-header">
+                <span style="color:var(--primary)">ĐỀ CHUẨN SÁT HẠCH</span>
+                <span>🏆</span>
+              </div>
+              <div class="stat-card-value" style="color:var(--primary)">60 câu / 60p</div>
+              <div class="stat-card-sub">Phân bổ đều 10 chủ đề • Xáo trộn</div>
+            </div>
+
+            <div class="stat-card" style="border-color: var(--danger-border); background: var(--danger-light);" onclick="startTrapExam()">
+              <div class="stat-card-header">
+                <span style="color:var(--danger)">ĐỀ 72 CÂU BẪY DỄ SAI</span>
+                <span>🔥</span>
+              </div>
+              <div class="stat-card-value" style="color:var(--danger)">72 câu / 60p</div>
+              <div class="stat-card-sub">Kiểm tra riêng 72 câu nhiều bẫy nhất</div>
+            </div>
+
+            <div class="stat-card" onclick="startQuickExam(30, 30, 'ALL', false)">
+              <div class="stat-card-header">
+                <span>ĐỀ KIỂM TRA NHANH</span>
+                <span>⚡</span>
+              </div>
+              <div class="stat-card-value">30 câu / 30p</div>
+              <div class="stat-card-sub">Lấy ngẫu nhiên 30 câu bất kỳ</div>
+            </div>
+
+            <div class="stat-card" onclick="startWeaknessExam()">
+              <div class="stat-card-header">
+                <span>ĐỀ XOÁY SÂU CÂU SAI</span>
+                <span>🎯</span>
+              </div>
+              <div class="stat-card-value">Ôn Điểm Yếu</div>
+              <div class="stat-card-sub">Ưu tiên câu bạn làm sai / chưa thuộc</div>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid var(--border-color); padding-top: 16px;">
+            <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 12px;">⚙️ Tự Tạo Đề Kiểm Tra Tùy Chỉnh</h3>
+            <div class="toolbar-row" style="gap: 12px;">
+              <div style="flex:1; min-width:140px;">
+                <label style="display:block; font-size:12px; font-weight:700; margin-bottom:4px;">Số lượng câu:</label>
+                <select id="custom-exam-count" class="select-control">
+                  <option value="20">20 câu</option>
+                  <option value="30">30 câu</option>
+                  <option value="50">50 câu</option>
+                  <option value="60" selected>60 câu (Chuẩn thi)</option>
+                  <option value="100">100 câu</option>
+                  <option value="340">Tất cả (340 câu)</option>
+                </select>
+              </div>
+
+              <div style="flex:1; min-width:140px;">
+                <label style="display:block; font-size:12px; font-weight:700; margin-bottom:4px;">Thời gian:</label>
+                <select id="custom-exam-time" class="select-control">
+                  <option value="15">15 phút</option>
+                  <option value="30">30 phút</option>
+                  <option value="45">45 phút</option>
+                  <option value="60" selected>60 phút</option>
+                  <option value="90">90 phút</option>
+                  <option value="0">Không giới hạn</option>
+                </select>
+              </div>
+
+              <div style="flex:1; min-width:180px;">
+                <label style="display:block; font-size:12px; font-weight:700; margin-bottom:4px;">Chủ đề kiểm tra:</label>
+                <select id="custom-exam-topic" class="select-control">
+                  <option value="ALL">Tất cả 10 chủ đề</option>
+                </select>
+              </div>
+
+              <div style="flex:1; min-width:160px;">
+                <label style="display:block; font-size:12px; font-weight:700; margin-bottom:4px;">Từ câu – Đến câu:</label>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <input type="number" id="custom-exam-from" class="input-control" value="1" min="1" max="340" />
+                  <span>-</span>
+                  <input type="number" id="custom-exam-to" class="input-control" value="340" min="1" max="340" />
+                </div>
+              </div>
+            </div>
+
+            <div class="toolbar-row" style="margin-top: 14px; justify-content: space-between;">
+              <div class="mode-toggles">
+                <label class="toggle-pill active" id="pill-exam-shuffle-q">
+                  <input type="checkbox" id="chk-exam-shuffle-q" checked style="display:none;" />
+                  🔀 Xáo trộn câu hỏi
+                </label>
+                <label class="toggle-pill" id="pill-exam-shuffle-opt">
+                  <input type="checkbox" id="chk-exam-shuffle-opt" style="display:none;" />
+                  🎲 Xáo trộn phương án
+                </label>
+              </div>
+
+              <button class="btn btn-lg btn-primary" id="btn-start-custom-exam" style="width:100%; max-width:320px;">
+                🚀 Bắt Đầu Làm Bài Kiểm Tra
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Exam & Result View -->
+      <div id="exam-active-view" style="display:none;">
+        <div id="exam-result-banner" style="display:none; margin-bottom: 16px;"></div>
+
+        <div class="exam-layout">
+          <div id="exam-main-column">
+            <!-- Single question or full review list -->
+          </div>
+
+          <aside class="exam-sidebar">
+            <div class="timer-box" id="exam-timer-display">60:00</div>
+
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; margin-bottom:10px;">
+              <span>Đã trả lời: <strong id="exam-answered-count">0/60</strong></span>
+              <span>Đặt cờ: <strong id="exam-flagged-count">0</strong></span>
+            </div>
+
+            <div id="exam-palette" class="palette-grid"></div>
+
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <button class="btn btn-primary" id="btn-submit-exam" style="width:100%;">
+                📤 Nộp Bài & Chấm Điểm
+              </button>
+              <button class="btn btn-sm" id="btn-exit-exam" style="width:100%;">
+                ⬅️ Quay lại tạo đề mới
+              </button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Sticky Action Bar (Shown on Mobile during Practice or Active Exam) -->
+  <div class="mobile-action-bar" id="mobile-action-bar">
+    <button class="btn" id="mob-act-prev">⬅️ Trước</button>
+    <button class="btn btn-outline-primary" id="mob-act-palette" style="flex:1;">
+      📋 Bảng câu (<span id="mob-act-progress">1/60</span>)
+    </button>
+    <button class="btn btn-primary" id="mob-act-next">Tiếp ➡️</button>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+    <button class="mob-nav-item active" data-tab="tab-dashboard">
+      <span class="mob-nav-icon">📊</span>
+      <span class="mob-nav-label">Tổng quan</span>
+    </button>
+    <button class="mob-nav-item" data-tab="tab-tips">
+      <span class="mob-nav-icon">💡</span>
+      <span class="mob-nav-label">Mẹo nhớ</span>
+    </button>
+    <button class="mob-nav-item" data-tab="tab-speed">
+      <span class="mob-nav-icon">⚡</span>
+      <span class="mob-nav-label">Học nhanh</span>
+    </button>
+    <button class="mob-nav-item" data-tab="tab-flashcard">
+      <span class="mob-nav-icon">🗂️</span>
+      <span class="mob-nav-label">Thẻ lật</span>
+    </button>
+    <button class="mob-nav-item" data-tab="tab-practice">
+      <span class="mob-nav-icon">🎯</span>
+      <span class="mob-nav-label">Luyện câu</span>
+    </button>
+    <button class="mob-nav-item" data-tab="tab-exam">
+      <span class="mob-nav-icon">📝</span>
+      <span class="mob-nav-label">Thi thử</span>
+    </button>
+  </nav>
+
+  <!-- Mobile Bottom-Sheet Drawer for Question Palette -->
+  <div class="mobile-drawer-overlay" id="mobile-palette-drawer">
+    <div class="mobile-drawer">
+      <div class="drawer-handle"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 id="mob-drawer-title" style="font-size:16px; font-weight:800;">Bảng Chọn Câu Hỏi Nhanh</h3>
+        <button class="btn btn-sm" id="btn-close-mob-drawer">✖ Đóng</button>
+      </div>
+      <div id="mob-drawer-timer-row" style="display:none; justify-content:space-between; align-items:center; padding:8px 12px; border-radius:8px; background:var(--primary-light); color:var(--primary); font-weight:800;">
+        <span id="mob-drawer-timer">⏱️ 60:00</span>
+        <span id="mob-drawer-answered">Đã làm: 0/60</span>
+      </div>
+      <div id="mob-drawer-grid" class="palette-grid" style="max-height:48vh;"></div>
+      <div id="mob-drawer-exam-actions" style="display:none; gap:8px;">
+        <button class="btn btn-primary" id="mob-drawer-submit-btn" style="flex:1;">📤 Nộp Bài Chấm Điểm</button>
+        <button class="btn" id="mob-drawer-exit-btn">Thoát đề</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for viewing a specific question from Master Cheat-Sheet -->
+  <div class="modal-overlay" id="question-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title" style="font-size: 17px; font-weight: 800;">Chi tiết câu hỏi</h3>
+        <button class="btn btn-sm" id="btn-close-modal">✖ Đóng</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Modal for Mobile QR Code & Offline File Instructions -->
+  <div class="modal-overlay" id="qr-mobile-modal">
+    <div class="modal-content" style="max-width: 540px;">
+      <div class="modal-header">
+        <h3 style="font-size: 17px; font-weight: 800;">📲 Học & Luyện Thi Trên Điện Thoại</h3>
+        <button class="btn btn-sm" id="btn-close-qr-modal">✖ Đóng</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="background:var(--primary-light); border:1px solid var(--primary-border); border-radius:12px; padding:16px; text-align:center;">
+          <h4 style="font-size:15px; font-weight:800; color:var(--primary); margin-bottom:6px;">
+            Cách 1: Quét Mã QR Mở Trực Tuyến Trên Điện Thoại (Mọi mạng 4G/5G/Wi-Fi)
+          </h4>
+          <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;">
+            Dùng Camera iPhone hoặc Zalo trên điện thoại quét mã dưới đây để mở ngay:
+          </p>
+          <div style="background:#ffffff; padding:12px; border-radius:12px; display:inline-block; box-shadow:var(--shadow-sm);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="165" height="165" class="segno"><path transform="scale(5)" class="qrline" stroke="#000" d="M2 2.5h7m1 0h1m2 0h3m2 0h1m1 0h3m1 0h7m-29 1h1m5 0h1m1 0h2m4 0h1m3 0h1m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m6 0h1m4 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h5m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m3 0h3m2 0h2m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m5 0h2m5 0h2m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h1m7 0h3m1 0h1m-21 1h1m1 0h2m1 0h3m2 0h1m3 0h1m2 0h2m1 0h1m1 0h1m2 0h1m1 0h2m-28 1h4m4 0h1m1 0h1m2 0h1m1 0h1m2 0h6m3 0h1m-29 1h2m1 0h1m2 0h1m1 0h1m7 0h3m1 0h2m1 0h2m1 0h2m-27 1h1m2 0h2m1 0h2m1 0h5m1 0h1m2 0h1m1 0h1m1 0h2m3 0h1m-29 1h2m3 0h5m2 0h2m1 0h1m1 0h1m2 0h1m4 0h2m-27 1h3m1 0h1m3 0h1m2 0h1m1 0h4m2 0h1m1 0h2m3 0h3m-27 1h5m1 0h2m4 0h1m1 0h1m2 0h1m2 0h3m1 0h3m-28 1h4m2 0h5m2 0h3m1 0h1m2 0h1m1 0h1m3 0h1m-28 1h1m1 0h1m3 0h1m1 0h1m1 0h2m2 0h1m3 0h1m2 0h1m1 0h3m1 0h1m-26 1h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h3m-28 1h1m1 0h1m3 0h7m2 0h2m3 0h3m3 0h1m-25 1h1m1 0h1m4 0h2m1 0h1m1 0h5m1 0h1m2 0h1m2 0h1m-26 1h2m1 0h1m1 0h1m1 0h1m1 0h4m1 0h12m-19 1h1m4 0h1m4 0h1m1 0h1m3 0h5m-29 1h7m1 0h2m1 0h3m2 0h1m2 0h2m1 0h1m1 0h2m1 0h1m-28 1h1m5 0h1m1 0h1m6 0h1m4 0h1m3 0h2m2 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m2 0h1m2 0h2m1 0h5m1 0h3m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h3m3 0h2m2 0h2m2 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h5m1 0h1m2 0h1m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m3 0h2m1 0h1m-28 1h7m1 0h3m4 0h1m2 0h4m3 0h1m1 0h1"/></svg>
+          </div>
+          <div style="margin-top:8px; font-weight:800; font-size:15px; color:var(--primary);">
+            https://trongphuhappy.github.io/dauthau/ (hoặc mạng nội bộ: http://192.168.22.9:8080)
+          </div>
+          <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">
+            *(Mẹo: Sau khi mở trên Safari/Chrome điện thoại, bấm <strong>"Chia sẻ -> Thêm vào màn hình chính"</strong> để cài thành App dùng Offline)*
+          </p>
+        </div>
+
+        <div style="background:var(--success-light); border:1px solid var(--success-border); border-radius:12px; padding:16px;">
+          <h4 style="font-size:15px; font-weight:800; color:var(--success); margin-bottom:6px;">
+            Cách 2 (Khuyên dùng): Gửi 1 File Offline qua Zalo sang Điện thoại (Dùng mọi lúc không cần mạng!)
+          </h4>
+          <p style="font-size:13px; color:var(--text-main); margin-bottom:12px;">
+            Toàn bộ 340 câu hỏi, 72 câu bẫy, mẹo nhớ và phòng thi đã được đóng gói gọn vào <strong>1 file duy nhất</strong>. Bạn chỉ cần gửi file này qua <strong>Zalo (Truyền file / Cloud của tôi)</strong> sang điện thoại là bấm mở học được ngay cả khi đi đường, dùng 4G hoặc tắt máy tính!
+          </p>
+          <a class="btn btn-success" href="On_Thi_Dau_Thau_340_Mobile_Offline.html" download style="width:100%;">
+            📥 Tải File App Mobile Độc Lập (On_Thi_Dau_Thau_340_Mobile_Offline.html)
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="tips-data.js"></script>
+  <script src="questions-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
