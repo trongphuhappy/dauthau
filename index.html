@@ -748,6 +748,70 @@
     </div>
   </div>
 
+  <!-- Floating "Quân Sư Đấu Thầu" Chatbot Widget (Bottom-Right) -->
+  <div class="quansu-widget" id="quansu-widget">
+    <!-- Chat Window -->
+    <div class="quansu-window" id="quansu-window" aria-hidden="true">
+      <div class="quansu-header">
+        <div class="quansu-header-info">
+          <div class="quansu-avatar">🧙‍♂️</div>
+          <div>
+            <div class="quansu-title">Quân Sư Đấu Thầu</div>
+            <div class="quansu-subtitle">
+              <span class="quansu-dot"></span> Chiến thuật Lụi Chuẩn • Xác suất 340 câu
+            </div>
+          </div>
+        </div>
+        <div class="quansu-header-actions">
+          <button class="quansu-icon-btn" id="btn-quansu-reset" title="Xóa lịch sử trò chuyện">🔄</button>
+          <button class="quansu-icon-btn" id="btn-quansu-close" title="Thu gọn Quân Sư">✖</button>
+        </div>
+      </div>
+
+      <!-- Dynamic Context Banner for Current Question -->
+      <div class="quansu-context-bar" id="quansu-context-bar">
+        <span id="quansu-context-label">📌 Đang mở: <strong>Câu #1</strong></span>
+        <button class="btn btn-sm btn-primary" id="btn-quansu-analyze-current" style="padding:4px 10px; font-size:12px;">
+          🎯 Soi câu này
+        </button>
+      </div>
+
+      <!-- Chat Messages Container -->
+      <div class="quansu-messages" id="quansu-messages"></div>
+
+      <!-- Quick Strategy Chips -->
+      <div class="quansu-chips-bar" id="quansu-chips-bar">
+        <button type="button" class="quansu-chip highlight" data-ask="ANALYZE_CURRENT">🎯 Soi câu đang mở</button>
+        <button type="button" class="quansu-chip" data-ask="LONGEST_MYTH">🚨 Chọn câu dài nhất?</button>
+        <button type="button" class="quansu-chip danger" data-ask="DEATH_WORDS">🔥 9 từ Tử Thần (Loại 94%)</button>
+        <button type="button" class="quansu-chip success" data-ask="GOLDEN_WORDS">💎 8 từ Kim Cương</button>
+        <button type="button" class="quansu-chip" data-ask="ALL_ABOVE_RULE">⚡ Mẹo Tất cả & A,B đúng</button>
+        <button type="button" class="quansu-chip" data-ask="TRAP_16_LIST">⚠️ 16 câu BẪY Tất cả</button>
+        <button type="button" class="quansu-chip" data-ask="NUMBER_RULE">🔢 Lụi nhanh Con số</button>
+        <button type="button" class="quansu-chip" data-ask="CRAM_30_MIN">⏱️ Lộ trình 30 phút</button>
+      </div>
+
+      <!-- Input Box -->
+      <form class="quansu-input-bar" id="quansu-form">
+        <input
+          type="text"
+          id="quansu-input"
+          class="quansu-input"
+          placeholder="Nhập số câu (VD: 115), từ khóa, hoặc mẹo lụi..."
+          autocomplete="off"
+        />
+        <button type="submit" class="quansu-send-btn" title="Gửi">➤</button>
+      </form>
+    </div>
+
+    <!-- Floating Action Button (FAB) -->
+    <button class="quansu-fab" id="quansu-fab" title="Mở Quân Sư Đấu Thầu - Bí kíp lụi chuẩn">
+      <span class="quansu-fab-icon">🧙‍♂️</span>
+      <span class="quansu-fab-text">Quân Sư Lụi Chuẩn</span>
+      <span class="quansu-fab-badge">VIP</span>
+    </button>
+  </div>
+
   <!-- Scripts -->
   <script src="tips-data.js"></script>
   <script src="questions-data.js"></script>

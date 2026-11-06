@@ -600,6 +600,9 @@
             ${isWrong ? `<span class="mini-stat danger" style="padding:2px 8px; font-size:11.5px;">❌ Hay sai (${userProgress.wrong[q.id]} lần)</span>` : ""}
           </div>
           <div class="q-actions">
+            <button class="btn btn-sm btn-outline-primary" onclick="askQuanSuQuestion(${q.id}, event)" title="Nhờ Quân Sư phân tích chiến thuật lụi & mẹo nhớ câu này">
+              🧙‍♂️ Quân Sư soi
+            </button>
             <button class="btn btn-sm ${isMastered ? "btn-success" : "btn-outline-success"}" onclick="markQuestionStatus(${q.id}, 'MASTERED', event)">
               ${isMastered ? "✅ Đã thuộc" : "Đánh dấu Đã thuộc"}
             </button>
@@ -900,6 +903,9 @@
             ${q.legal_note ? `<span class="q-legal-badge">📜 ${escapeHtml(q.legal_note)}</span>` : ""}
           </div>
           <div class="q-actions">
+            <button class="btn btn-sm btn-outline-primary" onclick="askQuanSuQuestion(${q.id}, event)">
+              🧙‍♂️ Quân Sư soi
+            </button>
             <button class="btn btn-sm ${isMastered ? "btn-success" : "btn-outline-success"}" onclick="markQuestionStatus(${q.id}, 'MASTERED', event)">
               ${isMastered ? "✅ Đã thuộc" : "Đánh dấu Đã thuộc"}
             </button>
@@ -2095,8 +2101,514 @@
         }
       }
     });
+
+    initQuanSuChatbot();
+  }
+
+  // =========================================================================
+  // "QUÂN SƯ ĐẤU THẦU" FLOATING CHATBOT ENGINE (STATISTICAL GUESSING ADVISOR)
+  // =========================================================================
+
+  function getCurrentContextQuestion() {
+    const activeTab = document.querySelector(".nav-tab.active")?.getAttribute("data-tab");
+    if (activeTab === "tab-practice" && pracState.list.length > 0) {
+      return pracState.list[pracState.index] || allQuestions[0];
+    }
+    if (activeTab === "tab-flashcard" && fcState.deck.length > 0) {
+      return fcState.deck[fcState.index] || allQuestions[0];
+    }
+    if (activeTab === "tab-exam" && examState.active && examState.questions.length > 0) {
+      return examState.questions[examState.index] || allQuestions[0];
+    }
+    if (activeTab === "tab-speed" && speedState.filtered.length > 0) {
+      const startIdx = (speedState.page - 1) * speedState.pageSize;
+      return speedState.filtered[startIdx] || allQuestions[0];
+    }
+    return allQuestions[0];
+  }
+
+  function updateQuanSuContextLabel() {
+    const label = document.getElementById("quansu-context-label");
+    if (!label) return;
+    const q = getCurrentContextQuestion();
+    if (q) {
+      label.innerHTML = `📌 Câu đang mở: <strong>Câu #${q.id}</strong>`;
+    }
+  }
+
+  function appendQuanSuMessage(role, htmlContent) {
+    const box = document.getElementById("quansu-messages");
+    if (!box) return;
+    const msg = document.createElement("div");
+    msg.className = `quansu-msg ${role}`;
+    msg.innerHTML = `<div class="quansu-bubble">${htmlContent}</div>`;
+    box.appendChild(msg);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function renderQuanSuWelcome() {
+    const box = document.getElementById("quansu-messages");
+    if (!box) return;
+    box.innerHTML = "";
+    appendQuanSuMessage(
+      "bot",
+      `
+        <div>👋 Chào bạn! Tôi là <strong>Quân Sư Đấu Thầu</strong> – Trợ lý phân tích xác suất & chiến thuật lụi chuẩn toàn bộ <strong>340 câu</strong>.</div>
+        <div class="quansu-step-box warning">
+          🚨 <strong>Cảnh báo số 1:</strong> Tuyệt đối <strong>KHÔNG</strong> áp dụng mẹo "chọn câu dài nhất" một cách mù quáng (chỉ đúng <strong>23,8% = 81/340 câu</strong>, ở câu hỏi phủ định sai tới <strong>87,5%</strong>)!
+        </div>
+        <div style="margin-top:8px;">
+          👉 Bạn có thể bấm nút <strong>"🎯 Soi câu đang mở"</strong>, bấm các thẻ chiến thuật bên dưới, hoặc gõ bất kỳ <strong>số câu (VD: 115)</strong> / <strong>từ khóa</strong> nào vào ô chat!
+        </div>
+      `
+    );
+    updateQuanSuContextLabel();
+  }
+
+  function buildQuestionTacticalAnalysisHTML(q) {
+    const opts = q.options || {};
+    const letters = ["A", "B", "C", "D"];
+
+    // 1. Check 9 Death Words (94.2% wrong)
+    const deathRules = [
+      { rx: /tổ chuyên gia/i, label: "Tổ chuyên gia (Sai 100% khi đứng riêng)" },
+      { rx: /bên mời thầu/i, label: "Bên mời thầu (Sai 100% khi đứng riêng)" },
+      { rx: /^người có thẩm quyền\.?$/i, label: "Người có thẩm quyền đứng 1 mình (Sai 90%, chỉ đúng Câu 151)" },
+      { rx: /trong mọi trường hợp/i, label: "Trong mọi trường hợp (Sai 100%)" },
+      { rx: /\bbắt buộc\b/i, label: "Bắt buộc (Sai 100% khi chỉ 1 đáp án có)" },
+      { rx: /\bchỉ được\b/i, label: "Chỉ được (Sai 100% khi chỉ 1 đáp án có)" },
+      { rx: /mà không/i, label: "Mà không... (Sai 100% khi chỉ 1 đáp án có)" },
+      { rx: /tiếp tục đánh giá/i, label: "Tiếp tục đánh giá (Sai 100% khi chỉ 1 đáp án có)" },
+      { rx: /(tất cả.*đều sai|các phương án trên đều sai|phương án a và b đều sai)/i, label: "Đều sai (Sai 89%–100%, chỉ đúng Câu 296, 301, 314)" }
+    ];
+
+    const eliminatedNotes = [];
+    deathRules.forEach((dr) => {
+      const matchedKeys = letters.filter((k) => dr.rx.test((opts[k] || "").trim()));
+      if (matchedKeys.length === 1) {
+        const mk = matchedKeys[0];
+        eliminatedNotes.push(
+          `Phương án <strong>${mk}</strong> chứa cụm từ Tử Thần <em>"${dr.label}"</em>`
+        );
+      }
+    });
+
+    // 2. Check 8 Golden Words (75-100% right)
+    const goldenRules = [
+      { rx: /dự án, gói thầu/i, label: "của dự án, gói thầu (Đúng 100%)" },
+      { rx: /(được tự quyết định|tự quyết định|có quyền quyết định)/i, label: "tự quyết định / có quyền quyết định (Đúng 100%)" },
+      { rx: /\b50%/i, label: "con số vàng 50% (Đúng 100%)" },
+      { rx: /\b70%/i, label: "con số vàng 70% (Đúng 67%)" },
+      { rx: /\bcó thể\b/i, label: "ngôn ngữ mở 'có thể' (Đúng 81,8%)" },
+      { rx: /một trong các/i, label: "ngôn ngữ mở 'một trong các' (Đúng 80%)" },
+      { rx: /trừ trường hợp/i, label: "ngoại lệ 'trừ trường hợp' (Đúng 80%)" },
+      { rx: /trên cơ sở bảo đảm/i, label: "'trên cơ sở bảo đảm...' (Đúng 71,4%)" },
+      { rx: /^chủ đầu tư\.?$/i, label: "Chủ đầu tư (Chủ thể có thẩm quyền chính theo Luật 2025)" }
+    ];
+
+    const goldenNotes = [];
+    goldenRules.forEach((gr) => {
+      const matchedKeys = letters.filter((k) => gr.rx.test((opts[k] || "").trim()));
+      if (matchedKeys.length === 1) {
+        const mk = matchedKeys[0];
+        goldenNotes.push(
+          `Phương án <strong>${mk}</strong> chứa cụm từ Kim Cương <em>"${gr.label}"</em>`
+        );
+      }
+    });
+
+    // 3. Check Special Group ("Tất cả đều đúng", "A và B đều đúng", Trap status)
+    let groupNote = "";
+    if (SPECIAL_GROUPS.ALL_CORRECT_18.includes(q.id)) {
+      groupNote = `✅ Câu này thuộc nhóm <strong>18 câu chọn "Tất cả đều đúng"</strong> (3 ý A, B, C bổ sung cho nhau, không mâu thuẫn) → Khoanh ngay <strong>${q.answer}</strong>!`;
+    } else if (SPECIAL_GROUPS.TRAP_ALL_16.includes(q.id)) {
+      groupNote = `⚠️ <strong>CẢNH BÁO BẪY CẤP ĐỘ CAO:</strong> Câu này nằm trong <strong>16 câu BẪY có dòng "Tất cả/Cả 3 đều đúng"</strong> nhưng A, B, C mâu thuẫn nhau → Tuyệt đối KHÔNG chọn D, đáp án chuẩn là <strong>${q.answer}</strong>!`;
+    } else if (SPECIAL_GROUPS.TWO_CORRECT_20.includes(q.id)) {
+      groupNote = `✅ Câu này thuộc nhóm <strong>20 câu chọn "Hai phương án (A&B / B&C / A&C) đều đúng"</strong> → Khoanh <strong>${q.answer}</strong>!`;
+    } else if (SPECIAL_GROUPS.TRAP_TWO_30.includes(q.id)) {
+      groupNote = `⚠️ <strong>CẢNH BÁO BẪY GỘP 2 Ý:</strong> Câu này có phương án gộp 2 ý nhưng là <strong>BẪY</strong> (chỉ có 1 ý đúng duy nhất là <strong>${q.answer}</strong>)!`;
+    } else if (SPECIAL_GROUPS.ALL_WRONG_3.includes(q.id)) {
+      groupNote = `❌ Câu này là <strong>1 trong 3 câu hiếm hoi chọn "Các phương án trên đều sai"</strong> (Câu 296, 301, 314) → Khoanh <strong>D</strong>!`;
+    }
+
+    // 4. Check Option Lengths
+    const lengths = letters.map((k) => ({ k, len: (opts[k] || "").trim().length }));
+    lengths.sort((a, b) => b.len - a.len);
+    const longestKey = lengths[0].k;
+    const isNegativeQ = /(không phải|không đúng|không phù hợp|không thuộc|nào sau đây là sai)/i.test(q.question);
+    let lengthNote = "";
+    if (longestKey === q.answer) {
+      lengthNote = `📏 <strong>Độ dài đáp án:</strong> Ở câu này phương án dài nhất (<strong>${longestKey}</strong>) trùng với đáp án đúng.`;
+    } else {
+      lengthNote = `🚨 <strong>Cảnh báo bẫy chọn câu dài:</strong> Phương án dài nhất là <strong>${longestKey}</strong> (${lengths[0].len} ký tự) nhưng là <strong>ĐÁP ÁN SAI</strong>${
+        isNegativeQ ? " (vì đây là câu hỏi PHỦ ĐỊNH tìm câu sai)" : ""
+      }! Đừng bị độ dài đánh lừa.`;
+    }
+
+    return `
+      <div>
+        <div style="font-weight:800; color:var(--primary); font-size:14px; margin-bottom:4px;">
+          🎯 Quân Sư Mổ Xẻ Câu #${q.id} ${q.is_trap ? '<span style="color:var(--danger)">(🔥 Câu Bẫy)</span>' : ""}
+        </div>
+        <div style="font-size:12.8px; color:var(--text-secondary); margin-bottom:8px;">
+          "${escapeHtml(q.question.length > 130 ? q.question.slice(0, 130) + "..." : q.question)}"
+        </div>
+
+        ${
+          eliminatedNotes.length > 0
+            ? `<div class="quansu-step-box danger">🔥 <strong>Bước 1 (Loại trừ 94,2%):</strong><br/>• ${eliminatedNotes.join("<br/>• ")} → <strong>Gạch bỏ!</strong></div>`
+            : ""
+        }
+
+        ${
+          goldenNotes.length > 0
+            ? `<div class="quansu-step-box success">💎 <strong>Bước 2 (Từ khóa Kim Cương):</strong><br/>• ${goldenNotes.join("<br/>• ")}</div>`
+            : ""
+        }
+
+        ${groupNote ? `<div class="quansu-step-box warning">${groupNote}</div>` : ""}
+
+        <div class="quansu-step-box">
+          ${lengthNote}
+        </div>
+
+        <div class="quansu-step-box primary">
+          🏆 <strong>Chốt đáp án đúng: [${q.answer}]</strong> — ${escapeHtml(opts[q.answer] || "")}<br/>
+          🔑 <strong>Từ khóa 3 giây:</strong> Hỏi <em>"${escapeHtml(q.question_keyword || "...")}"</em> → Chọn <strong>"${escapeHtml(q.answer_keyword || opts[q.answer] || "")}"</strong><br/>
+          💡 <strong>Mẹo nhớ:</strong> ${escapeHtml(q.tip || "")}
+        </div>
+
+        <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="q-chip" onclick="openQuestionModal(${q.id})">👁️ Mở toàn văn Câu #${q.id}</button>
+        </div>
+      </div>
+    `;
+  }
+
+  window.askQuanSuQuestion = function (qId, evt) {
+    if (evt) evt.stopPropagation();
+    const q = allQuestions.find((item) => item.id === Number(qId));
+    if (!q) return;
+    const win = document.getElementById("quansu-window");
+    if (win) {
+      win.classList.add("open");
+      win.setAttribute("aria-hidden", "false");
+    }
+    appendQuanSuMessage("user", `🎯 Soi chiến thuật & mẹo nhớ Câu #${q.id}`);
+    appendQuanSuMessage("bot", buildQuestionTacticalAnalysisHTML(q));
+  };
+
+  function handleQuanSuQuickStrategy(code) {
+    if (code === "ANALYZE_CURRENT") {
+      const q = getCurrentContextQuestion();
+      if (q) {
+        appendQuanSuMessage("user", `🎯 Soi câu đang mở (Câu #${q.id})`);
+        appendQuanSuMessage("bot", buildQuestionTacticalAnalysisHTML(q));
+      }
+      return;
+    }
+
+    if (code === "LONGEST_MYTH") {
+      appendQuanSuMessage("user", "🚨 Có nên chọn câu dài nhất khi đi thi không?");
+      appendQuanSuMessage(
+        "bot",
+        `
+          <div><strong>🚨 KẾT LUẬN THỐNG KÊ 340 CÂU: TUYỆT ĐỐI KHÔNG CHỌN MÙ QUÁNG CÂU DÀI NHẤT!</strong></div>
+          <div class="quansu-step-box danger">
+            • Chọn đáp án dài nhất toàn cục chỉ đúng <strong>81/340 câu (23,8%)</strong> — thấp hơn cả đánh bừa 25%!<br/>
+            • Ở <strong>24 câu hỏi phủ định</strong> (<em>"Phương án nào KHÔNG phải / KHÔNG đúng / SAI"</em>), đáp án dài vượt trội lại là câu trích nguyên văn Luật nên <strong>SAI TỚI 87,5% (7/8 câu)</strong>!
+          </div>
+          <div class="quansu-step-box primary">
+            📊 <strong>Tỷ lệ đáp án đúng theo chữ cái:</strong><br/>
+            • <strong>A: 93 câu (27,4%) – Nhiều nhất</strong><br/>
+            • <strong>B: 86 câu (25,3%)</strong><br/>
+            • <strong>C: 82 câu (24,1%)</strong><br/>
+            • <strong>D: 79 câu (23,2%)</strong><br/>
+            👉 Nếu bí hoàn toàn, hãy loại các đáp án có <em>"từ Tử Thần"</em> rồi ưu tiên khoanh <strong>A (hoặc C)</strong>!
+          </div>
+        `
+      );
+      return;
+    }
+
+    if (code === "DEATH_WORDS") {
+      appendQuanSuMessage("user", "🔥 9 cụm từ Tử Thần cần gạch bỏ ngay là gì?");
+      appendQuanSuMessage(
+        "bot",
+        `
+          <div><strong>🔥 9 CỤM TỪ "TỬ THẦN" (TỶ LỆ SAI TỚI 94,2% – 113/120 PHƯƠNG ÁN!)</strong></div>
+          <div style="margin-top:4px;">Hễ thấy 1 phương án đơn lẻ chứa các từ này → <strong>GẠCH BỎ NGAY</strong>:</div>
+          <div class="quansu-step-box danger">
+            1. <strong>"Tổ chuyên gia"</strong> (đứng riêng): <strong>SAI 100% (16/16 câu)</strong><br/>
+            2. <strong>"Bên mời thầu"</strong> (đứng riêng): <strong>SAI 100% (8/8 câu)</strong><br/>
+            3. <strong>"Người có thẩm quyền"</strong> (đứng 1 mình): <strong>SAI 90% (9/10 câu)</strong> – <em>Chỉ đúng duy nhất <span class="q-chip" onclick="openQuestionModal(151)">Câu 151</span> (Kế hoạch TỔNG THỂ LCNT)</em><br/>
+            4. <strong>"Trong mọi trường hợp"</strong>: <strong>SAI 100% (6/6 câu)</strong><br/>
+            5. <strong>"Bắt buộc"</strong> (chỉ 1 đáp án có): <strong>SAI 100% (7/7 câu)</strong><br/>
+            6. <strong>"Chỉ được"</strong> (chỉ 1 đáp án có): <strong>SAI 100% (7/7 câu)</strong><br/>
+            7. <strong>"Mà không"</strong> (VD: mà không cần...): <strong>SAI 100% (6/6 câu)</strong><br/>
+            8. <strong>"Tiếp tục đánh giá"</strong> (chỉ 1 đáp án có): <strong>SAI 100% (8/8 câu)</strong><br/>
+            9. <strong>"Tất cả đều sai" / "A và B đều sai"</strong>: <strong>SAI 89%–100%</strong> <em>(Chỉ đúng 3 câu: <span class="q-chip" onclick="openQuestionModal(296)">Câu 296</span> <span class="q-chip" onclick="openQuestionModal(301)">Câu 301</span> <span class="q-chip" onclick="openQuestionModal(314)">Câu 314</span>)</em>
+          </div>
+        `
+      );
+      return;
+    }
+
+    if (code === "GOLDEN_WORDS") {
+      appendQuanSuMessage("user", "💎 8 cụm từ Kim Cương khoanh ngay là gì?");
+      appendQuanSuMessage(
+        "bot",
+        `
+          <div><strong>💎 8 CỤM TỪ "KIM CƯƠNG" (ĐỘ CHÍNH XÁC 75% – 100%)</strong></div>
+          <div style="margin-top:4px;">Khi chỉ có 1 phương án duy nhất chứa các cụm từ chuẩn Luật 90/2025 & NĐ 214/2025 này → <strong>KHOANH NGAY</strong>:</div>
+          <div class="quansu-step-box success">
+            1. <strong>"...của dự án, gói thầu"</strong> / <strong>"tiến độ của dự án, gói thầu"</strong>: <strong>ĐÚNG 100% (4/4 câu)</strong><br/>
+            2. <strong>"Được tự quyết định" / "Có quyền quyết định"</strong>: <strong>ĐÚNG 100% (2/2 câu)</strong><br/>
+            3. Con số <strong>"50%"</strong>: <strong>ĐÚNG 100% (4/4 câu)</strong>; <strong>"70%"</strong>: <strong>ĐÚNG 67%</strong><br/>
+            4. Từ mở <strong>"Có thể"</strong> (chỉ 1 đáp án có): <strong>ĐÚNG 81,8% (9/11 câu)</strong><br/>
+            5. <strong>"Một trong các"</strong>: <strong>ĐÚNG 80% (4/5 câu)</strong><br/>
+            6. <strong>"Trừ trường hợp..."</strong>: <strong>ĐÚNG 80% (4/5 câu)</strong><br/>
+            7. <strong>"Trên cơ sở bảo đảm..."</strong>: <strong>ĐÚNG 71,4% (5/7 câu)</strong><br/>
+            8. Hỏi chủ thể phê duyệt/quyết định/đăng tải → Khoanh <strong>"Chủ đầu tư"</strong>!
+          </div>
+        `
+      );
+      return;
+    }
+
+    if (code === "ALL_ABOVE_RULE") {
+      appendQuanSuMessage("user", "⚡ Quy tắc 3 giây xử lý câu có Tất cả đều đúng & A,B đúng?");
+      appendQuanSuMessage(
+        "bot",
+        `
+          <div><strong>⚡ QUY TẮC 3 GIÂY XỬ LÝ ĐÁP ÁN GỘP:</strong></div>
+          <div class="quansu-step-box primary">
+            <strong>1. Khi D là "Tất cả / Cả 3 phương án đều đúng" (34 câu):</strong><br/>
+            • Nếu A, B, C là 3 ý <strong>liệt kê bổ sung nhau</strong> (không đá nhau) → <strong>Khoanh D (Trúng 85%)</strong>.<br/>
+            • Nếu A, B, C <strong>mâu thuẫn trực tiếp nhau</strong> (VD: A nói <em>Được</em>, B nói <em>Không được</em>; hoặc 3 thời điểm khác nhau) → <strong>Loại ngay D và B</strong>, chỉ chọn <strong>A hoặc C</strong> (A và C chiếm tới <strong>15/16 câu = 93,8%</strong>)!
+          </div>
+          <div class="quansu-step-box warning">
+            <strong>2. Khi có "Phương án A và B (hoặc B và C) đều đúng" (50 câu):</strong><br/>
+            • Nếu C là <em>"A và B đều đúng"</em> còn D là <em>"A và B đều sai"</em> (<span class="q-chip" onclick="openQuestionModal(20)">Câu 20</span> <span class="q-chip" onclick="openQuestionModal(107)">Câu 107</span> <span class="q-chip" onclick="openQuestionModal(252)">Câu 252</span>) → Gạch D ngay, chọn <strong>C</strong> (riêng Câu 20 chọn A miễn phí).<br/>
+            • Kiểm tra 2 ý được nhắc tên: nếu 1 ý dính "từ Tử Thần" ở Bước 1 thì loại câu gộp, khoanh ý còn lại!
+          </div>
+        `
+      );
+      return;
+    }
+
+    if (code === "TRAP_16_LIST") {
+      appendQuanSuMessage("user", "⚠️ Cho xem 16 câu BẪY có Tất cả đều đúng nhưng KHÔNG chọn D!");
+      const chips = SPECIAL_GROUPS.TRAP_ALL_16.map(
+        (id) => `<span class="q-chip" onclick="askQuanSuQuestion(${id})">Câu ${id}</span>`
+      ).join(" ");
+      appendQuanSuMessage(
+        "bot",
+        `
+          <div><strong>⚠️ 16 CÂU BẪY CÓ "TẤT CẢ ĐỀU ĐÚNG" NHƯNG KHÔNG CHỌN D:</strong></div>
+          <div class="quansu-step-box danger">
+            Chỉ cần nhớ mặt 16 câu này (trong đó <strong>15/16 câu chọn A hoặc C</strong>, duy nhất Câu 46 chọn B), còn lại gặp "Tất cả đều đúng" bạn tự tin khoanh D 100%!<br/><br/>
+            ${chips}
+          </div>
+          <div style="margin-top:8px;">
+            <button class="btn btn-sm btn-danger" onclick="openSpeedWithFilter('TRAP_ALL_16')">🔥 Mở lọc 16 câu này để học ngay</button>
+          </div>
+        `
+      );
+      return;
+    }
+
+    if (code === "NUMBER_RULE") {
+      appendQuanSuMessage("user", "🔢 Mẹo lụi nhanh các câu hỏi Con Số (Ngày, Tiền, Năm, %)?");
+      appendQuanSuMessage(
+        "bot",
+        `
+          <div><strong>🔢 BẢNG LỤI NHANH CON SỐ KHI QUÊN BÀI:</strong></div>
+          <div class="quansu-step-box success">
+            • <strong>Số ngày làm việc:</strong> Khoanh <strong>03 ngày làm việc</strong> (làm rõ HSMT, sửa sai lệch chào giá) hoặc <strong>05 ngày làm việc</strong> (công khai KHLCNT, đăng KQLCNT, trả lời kiến nghị).<br/>
+            • <strong>Số ngày tự nhiên:</strong> Gạch bỏ <em>"20 ngày"</em> (Sai 100%). Khoanh <strong>10 ngày</strong> (chuẩn bị HSDT, kiến nghị KQLCNT) hoặc <strong>14 ngày</strong> (hoàn trả BĐDT).<br/>
+            • <strong>Số năm:</strong> Khoanh <strong>03 năm</strong> hoặc <strong>03 – 05 năm</strong> (Đúng 65% các câu có năm: doanh thu 3 năm, cấm thầu gian lận/thông thầu 3–5 năm, lưu hồ sơ 5 năm).<br/>
+            • <strong>Tỷ lệ %:</strong> Khoanh <strong>50%</strong> (Đúng 100%: HĐ tương tự gói hỗn hợp, tạm ứng công việc tự thực hiện) hoặc <strong>70%</strong> (Đúng 67%).<br/>
+            • <strong>Số tiền:</strong> Gạch bỏ <em>"50 triệu"</em> (khi đứng riêng) và <em>"05 tỷ"</em> (Sai 100%). Dự toán mua sắm khoanh <strong>500 triệu</strong>; Dự án khoanh <strong>01 tỷ / 02 tỷ</strong>.
+          </div>
+        `
+      );
+      return;
+    }
+
+    if (code === "CRAM_30_MIN") {
+      appendQuanSuMessage("user", "⏱️ Chỉ còn 30 phút trước giờ thi thì học thế nào hiệu quả nhất?");
+      appendQuanSuMessage(
+        "bot",
+        `
+          <div><strong>⏱️ LỘ TRÌNH 30 PHÚT CẤP CỨU TRƯỚC GIỜ THI:</strong></div>
+          <div class="quansu-step-box primary">
+            <strong>• Phút 01 – 10:</strong> Bấm xem <strong>16 câu bẫy không chọn "Tất cả đều đúng"</strong> + <strong>3 câu chọn "Tất cả đều sai"</strong> (Câu 296, 301, 314) → Ăn chắc ngay 10% đề thi.<br/>
+            <strong>• Phút 11 – 25:</strong> Bấm nút <button class="q-chip" onclick="openSpeedWithFilter('TRAP')">🔥 72 Câu Bẫy Dễ Sai</button> và bật nút <strong>"🎯 Ẩn đáp án sai"</strong> để chụp ảnh từ khóa đúng vào não.<br/>
+            <strong>• Phút 26 – 30:</strong> Thuộc lòng <strong>9 từ Tử Thần (Loại 94,2%)</strong> + <strong>8 từ Kim Cương (Khoanh 80–100%)</strong> của Quân Sư để xử đẹp mọi câu lạ trong phòng thi!
+          </div>
+        `
+      );
+      return;
+    }
+  }
+
+  function handleQuanSuFreeText(rawText) {
+    const text = (rawText || "").trim();
+    if (!text) return;
+
+    appendQuanSuMessage("user", escapeHtml(text));
+    const norm = normalizeVN(text);
+
+    // 1. Check if user typed a question number (e.g., "115", "cau 115", "#115")
+    const qMatch = norm.match(/^(?:cau\s*|#)?(\d{1,3})$/);
+    if (qMatch) {
+      const qId = Number(qMatch[1]);
+      const q = allQuestions.find((item) => item.id === qId);
+      if (q) {
+        appendQuanSuMessage("bot", buildQuestionTacticalAnalysisHTML(q));
+      } else {
+        appendQuanSuMessage("bot", `⚠️ Bộ đề chỉ có từ <strong>Câu 1 đến Câu 340</strong>. Bạn hãy nhập số câu trong khoảng 1–340 nhé!`);
+      }
+      return;
+    }
+
+    // 2. Check tactical intent keywords
+    if (norm.includes("dai nhat") || norm.includes("cau dai")) {
+      handleQuanSuQuickStrategy("LONGEST_MYTH");
+      return;
+    }
+    if (norm.includes("tu than") || norm.includes("loai tru") || norm.includes("gach bo")) {
+      handleQuanSuQuickStrategy("DEATH_WORDS");
+      return;
+    }
+    if (norm.includes("kim cuong") || norm.includes("khoanh ngay")) {
+      handleQuanSuQuickStrategy("GOLDEN_WORDS");
+      return;
+    }
+    if (norm.includes("tat ca") || norm.includes("ca 3") || norm.includes("hai y") || norm.includes("a va b")) {
+      handleQuanSuQuickStrategy("ALL_ABOVE_RULE");
+      return;
+    }
+    if (norm.includes("con so") || norm.includes("bao nhieu ngay") || norm.includes("han muc")) {
+      handleQuanSuQuickStrategy("NUMBER_RULE");
+      return;
+    }
+    if (norm.includes("30 phut") || norm.includes("cap toc") || norm.includes("chien thuat") || norm.includes("lui")) {
+      handleQuanSuQuickStrategy("CRAM_30_MIN");
+      return;
+    }
+
+    // 3. Otherwise search across all 340 questions for matching keywords
+    const matches = allQuestions.filter((q) => {
+      const hay = normalizeVN(
+        `${q.id} ${q.question} ${q.question_keyword || ""} ${q.answer_keyword || ""} ${q.tip || ""} ${q.options?.A || ""} ${q.options?.B || ""} ${q.options?.C || ""} ${q.options?.D || ""}`
+      );
+      return hay.includes(norm);
+    });
+
+    if (matches.length === 0) {
+      appendQuanSuMessage(
+        "bot",
+        `🔍 Không tìm thấy câu hỏi nào chứa từ khóa <strong>"${escapeHtml(text)}"</strong>. Bạn hãy thử gõ từ khóa ngắn gọn hơn (VD: <em>"bảo lãnh", "liên danh", "500 triệu", "chào giá", "câu 115"</em>)!`
+      );
+      return;
+    }
+
+    const topMatches = matches.slice(0, 6);
+    const itemsHtml = topMatches
+      .map(
+        (q) => `
+        <div class="quansu-step-box" style="margin-top:6px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+            <strong>Câu #${q.id} ${q.is_trap ? "🔥" : ""} (Đáp án: ${q.answer})</strong>
+            <div style="display:flex; gap:4px;">
+              <button class="q-chip" onclick="askQuanSuQuestion(${q.id})">🎯 Soi</button>
+              <button class="q-chip" onclick="openQuestionModal(${q.id})">👁️ Xem</button>
+            </div>
+          </div>
+          <div style="font-size:12.2px; color:var(--text-secondary); margin-top:3px;">
+            ${escapeHtml(q.question.length > 95 ? q.question.slice(0, 95) + "..." : q.question)}
+          </div>
+          <div style="font-size:12.5px; color:var(--success); font-weight:700; margin-top:3px;">
+            ✅ [${q.answer}] ${escapeHtml(q.answer_keyword || q.options[q.answer] || "")}
+          </div>
+        </div>
+      `
+      )
+      .join("");
+
+    appendQuanSuMessage(
+      "bot",
+      `
+        <div>🎯 Tìm thấy <strong>${matches.length} câu hỏi</strong> khớp với từ khóa <strong>"${escapeHtml(text)}"</strong>:</div>
+        ${itemsHtml}
+        ${
+          matches.length > 6
+            ? `<div style="margin-top:8px;"><button class="btn btn-sm btn-outline-primary" style="width:100%;" onclick="quickSearchKeyword('${escapeHtml(text.replace(/'/g, "\\'"))}')">🔎 Xem toàn bộ ${matches.length} câu trong tab Học Nhanh</button></div>`
+            : ""
+        }
+      `
+    );
+  }
+
+  function initQuanSuChatbot() {
+    const fab = document.getElementById("quansu-fab");
+    const win = document.getElementById("quansu-window");
+    const closeBtn = document.getElementById("btn-quansu-close");
+    const resetBtn = document.getElementById("btn-quansu-reset");
+    const analyzeCurBtn = document.getElementById("btn-quansu-analyze-current");
+    const form = document.getElementById("quansu-form");
+    const input = document.getElementById("quansu-input");
+
+    if (!fab || !win) return;
+
+    renderQuanSuWelcome();
+
+    fab.addEventListener("click", () => {
+      const isOpen = win.classList.toggle("open");
+      win.setAttribute("aria-hidden", String(!isOpen));
+      if (isOpen) {
+        updateQuanSuContextLabel();
+        input?.focus();
+      }
+    });
+
+    closeBtn?.addEventListener("click", () => {
+      win.classList.remove("open");
+      win.setAttribute("aria-hidden", "true");
+    });
+
+    resetBtn?.addEventListener("click", () => {
+      renderQuanSuWelcome();
+    });
+
+    analyzeCurBtn?.addEventListener("click", () => {
+      handleQuanSuQuickStrategy("ANALYZE_CURRENT");
+    });
+
+    document.querySelectorAll("#quansu-chips-bar .quansu-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const code = chip.getAttribute("data-ask");
+        if (code) handleQuanSuQuickStrategy(code);
+      });
+    });
+
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!input) return;
+      const val = input.value;
+      input.value = "";
+      handleQuanSuFreeText(val);
+    });
+
+    // Update context label whenever user clicks or changes questions
+    document.addEventListener("click", () => {
+      setTimeout(updateQuanSuContextLabel, 50);
+    });
   }
 
   document.addEventListener("DOMContentLoaded", initApp);
 })();
+
 
