@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Đấu Thầu 340" />
-  
+  <link rel="manifest" href="manifest.json" />
   <title>Học Nhanh 340 Câu Chứng Chỉ Đấu Thầu – Mẹo Nhớ & Thi Thử</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2406,7 +2406,7 @@ body.mobile-view .fc-hint {
   </div>
 
   <!-- Scripts -->
-<script>
+  <script>
 // Dữ liệu Bí Kíp & Mẹo Ghi Nhớ Nhanh Hệ Thống 340 Câu Đấu Thầu
 window.BIDDING_TOPICS = [
   {
@@ -2735,12 +2735,47 @@ window.MASTER_TIPS = [
         questions: [296, 301, 314]
       }
     ]
+  },
+  {
+    id: "guessing-strategy",
+    title: "7. Bí Kíp Chiến Thuật 'Lụi Chuẩn' Cấp Tốc (Thống Kê Xác Suất Thực Tế 340 Câu)",
+    icon: "🎲",
+    badge: "Cấp cứu phòng thi",
+    summary: "Phân tích dữ liệu 340 câu bằng thuật toán: CẢNH BÁO chọn câu dài nhất chỉ đúng 23,8% (thấp hơn đánh bừa)! Áp dụng Phễu 5 Bước dưới đây để lụi chuẩn 80% - 94% khi gặp câu chưa kịp học.",
+    items: [
+      {
+        key: "🚨 Sự thật thống kê: Có nên chọn câu DÀI NHẤT không? -> KHÔNG! (Chỉ đúng 23,8%)",
+        rule: "Chạy thống kê toàn bộ 340 câu hỏi của Cục Quản lý đấu thầu:\n• Tỷ lệ phân bổ đáp án: **A = 93 câu (27,4%)** | **B = 86 câu (25,3%)** | **C = 82 câu (24,1%)** | **D = 79 câu (23,2%)** -> Nếu bí hoàn toàn phải khoanh 1 chữ cái, hãy ưu tiên **A**.\n• Chọn đáp án DÀI NHẤT toàn cục chỉ đúng **81/340 câu (23,8%)** — thấp hơn cả xác suất đánh bừa 25%! Vì người ra đề cố tình gài thêm vế phụ sai vào câu dài (ví dụ: 'bắt buộc phải liên danh', 'tiếp tục đánh giá...').\n• ĐẶC BIỆT: Với 24 câu hỏi phủ định ('Phương án nào KHÔNG phải / KHÔNG đúng / SAI'), đáp án dài vượt trội lại là câu trích nguyên văn Luật nên **SAI TỚI 87,5% (7/8 câu)**! Chỉ chọn câu dài nhất khi đó là câu hỏi khẳng định, không có đáp án gộp, và câu dài đó chứa cụm từ mở ('trừ trường hợp...', 'trên cơ sở bảo đảm tiến độ dự án, gói thầu').",
+        questions: [5, 7, 14, 37, 38, 39, 49, 50]
+      },
+      {
+        key: "🔥 Bước 1: GẠCH BỎ NGAY 9 cụm từ 'Tử Thần' (Tỷ lệ SAI tới 94,2% - 113/120 phương án)",
+        rule: "Trong 340 câu, có 120 phương án chứa các cụm từ dưới đây thì tới **113 phương án là SAI (94,2%)**. Gặp phương án đơn lẻ chứa các từ này -> GẠCH BỎ NGAY LẬP TỨC:\n1) **'Tổ chuyên gia'** (đứng riêng ở 1 đáp án): **SAI 100% (16/16 câu)** -> Tổ chuyên gia chỉ đánh giá, không có thẩm quyền quyết định/phê duyệt/đăng tải!\n2) **'Bên mời thầu'** (đứng riêng ở 1 đáp án): **SAI 100% (8/8 câu)** -> Luật mới đã bỏ vai trò Bên mời thầu ở hầu hết quy trình!\n3) **'Người có thẩm quyền'** (đứng độc lập 1 mình): **SAI 90% (9/10 câu)** -> Chỉ đúng duy nhất ở Câu 151 (Kế hoạch TỔNG THỂ LCNT), còn lại chọn **Chủ đầu tư**!\n4) **'Trong mọi trường hợp'**: **SAI 100% (6/6 câu)**.\n5) **'Bắt buộc'** (chỉ xuất hiện ở 1 đáp án): **SAI 100% (7/7 câu)**.\n6) **'Chỉ được'** (chỉ xuất hiện ở 1 đáp án): **SAI 100% (7/7 câu)**.\n7) **'Mà không'** (ví dụ: mà không cần...): **SAI 100% (6/6 câu)**.\n8) **'Tiếp tục đánh giá'** (khi chỉ 1 đáp án có): **SAI 100% (8/8 câu)**.\n9) **'Tất cả/Các phương án trên đều sai'** hoặc **'A và B đều sai'**: **SAI 89% - 100%** (Chỉ đúng 3 câu 296, 301, 314).",
+        questions: [151, 155, 179, 216, 220, 284, 296, 301, 314]
+      },
+      {
+        key: "💎 Bước 2: KHOANH NGAY 8 cụm từ 'Kim Cương' (Tỷ lệ ĐÚNG từ 75% - 100%)",
+        rule: "Khi chỉ có 1 phương án duy nhất trong 4 đáp án chứa các cụm từ chuẩn ngôn ngữ Luật Đấu thầu 2025 dưới đây -> KHOANH NGAY:\n1) **'...của dự án, gói thầu'** / **'tiến độ của dự án, gói thầu'**: **ĐÚNG 100% (4/4 câu)**.\n2) **'Được tự quyết định'** / **'Có quyền quyết định'**: **ĐÚNG 100% (2/2 câu)**.\n3) **'50%'** (trong câu hỏi về tỷ lệ %): **ĐÚNG 100% (4/4 câu)**; **'70%'**: **ĐÚNG 67% (2/3 câu)**.\n4) **'Có thể'** (ngôn ngữ linh hoạt chỉ xuất hiện ở 1 đáp án): **ĐÚNG 81,8% (9/11 câu)**.\n5) **'Một trong các'**: **ĐÚNG 80% (4/5 câu)**.\n6) **'Trừ trường hợp'**: **ĐÚNG 80% (4/5 câu)**.\n7) **'Trên cơ sở bảo đảm...'**: **ĐÚNG 71,4% (5/7 câu)**.\n8) Hỏi chủ thể nào có thẩm quyền/trách nhiệm -> Ưu tiên khoanh **'Chủ đầu tư'**.",
+        questions: [131, 132, 133, 153, 154, 194, 216, 220, 284]
+      },
+      {
+        key: "⚡ Bước 3: Quy tắc 3 giây xử lý câu có 'Tất cả đều đúng' & 'A và B đều đúng'",
+        rule: "• Khi D là **'Tất cả/Cả 3 phương án đều đúng'** (31 câu):\n  - Nhìn nhanh A, B, C: Nếu A, B, C là **3 ý liệt kê bổ sung nhau** (không mâu thuẫn) -> **Khoanh D (Trúng 85%)**.\n  - Nếu A, B, C **mâu thuẫn trực tiếp nhau** (ví dụ: A nói 'Được', B nói 'Không được'; hoặc A, B, C là 3 thời điểm khác nhau) -> **Gạch bỏ D và B**, chỉ chọn **A hoặc C** (Trong 14 câu bẫy thì **A chiếm 8 câu, C chiếm 5 câu = 92,9%**, B chỉ có 1 câu 46)!\n• Khi D là **'Phương án A và B (hoặc B và C) đều đúng'** (49 câu):\n  - Có tới **69,4% (34/49 câu)** đáp án nằm gọn trong nhóm (D hoặc 1 trong 2 chữ cái được nhắc tên). Nếu thấy C là 'A và B đều đúng' còn D là 'A và B đều sai' (Câu 20, 107, 252) -> Gạch D ngay, ưu tiên chọn C (trừ Câu 20 chọn A vì A miễn phí đối lập B bán tiền).",
+        questions: [20, 30, 43, 46, 107, 110, 115, 252, 269, 274]
+      },
+      {
+        key: "🔢 Bước 4: Mẹo lụi nhanh Con Số (Thời gian, Tiền, Năm) khi quên lý thuyết",
+        rule: "Nếu 4 đáp án là 4 con số mà bạn quên kiến thức, hãy ưu tiên theo tần suất trúng cao nhất trong 340 câu:\n• **Số ngày làm việc**: Ưu tiên **03 ngày làm việc** (Đúng 50% mỗi khi xuất hiện: làm rõ E-HSMT, sửa sai lệch chào giá) hoặc **05 ngày làm việc** (công khai KHLCNT, đăng KQLCNT, trả lời kiến nghị).\n• **Số ngày tự nhiên**: Gạch ngay '20 ngày' (Sai 100%), ưu tiên **10 ngày** (chuẩn bị HSDT, gửi kiến nghị KQLCNT) hoặc **14 ngày** (hoàn trả BĐDT).\n• **Số năm**: Ưu tiên **03 năm - 05 năm** (Đúng 65% các câu có số năm: cấm thầu gian lận/thông thầu, doanh thu 3 năm, lưu hồ sơ 5 năm).\n• **Số tiền hạn mức**: Gạch ngay '50 triệu' khi đứng riêng ở 1 đáp án (Sai 100%) và gạch '05 tỷ' (Sai 100%). Ưu tiên **500 triệu** (chỉ định thầu dự toán mua sắm) hoặc **01 tỷ / 02 tỷ** (gói thầu chỉ định thầu dự án / chào giá trực tuyến rút gọn).",
+        questions: [27, 33, 87, 134, 160, 162, 181, 200]
+      }
+    ]
   }
 ];
 
 
+
 </script>
-<script>
+  <script>
 // Bộ 340 câu hỏi ôn thi chứng chỉ nghiệp vụ chuyên môn về đấu thầu
 window.QUESTIONS_DATA = [
   {
@@ -9206,7 +9241,7 @@ window.QUESTIONS_DATA = [
 ];
 
 </script>
-<script>
+  <script>
 // Hệ Thống Học Thuộc Nhanh & Luyện Thi 340 Câu Đấu Thầu
 (function () {
   "use strict";
