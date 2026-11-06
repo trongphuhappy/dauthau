@@ -1699,6 +1699,10 @@ body.mobile-view .fc-hint {
       </div>
 
       <div class="header-actions">
+        <div class="search-input-wrap" style="min-width: 210px; max-width: 260px;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="global-keyword-search" class="input-control" style="padding: 6px 10px 6px 32px; font-size: 13px;" placeholder="Tìm nhanh từ khóa / số câu..." />
+        </div>
         <button class="btn btn-sm btn-outline-primary" id="btn-mobile-view-toggle" title="Chuyển đổi giao diện Điện thoại / Máy tính">
           📱 Giao diện Mobile
         </button>
@@ -1831,6 +1835,48 @@ body.mobile-view .fc-hint {
         </div>
       </div>
 
+      <!-- Thống kê nhanh nhóm câu Tất cả đều đúng / Hai ý đúng / Câu bẫy -->
+      <div class="toolbar-card" style="margin-bottom: 24px; border-left: 5px solid var(--primary);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <h3 style="font-size:16px; font-weight:800; color:var(--text-main);">
+            🎯 Thống Kê Nhóm Câu "Tất Cả Các Ý Đều Đúng" & "Hai Ý Đều Đúng" (Bấm Để Học Ngay)
+          </h3>
+          <span class="mini-stat success">Tổng 38 câu chọn đáp án gộp ĐÚNG</span>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-top:4px;">
+          <button class="btn btn-outline-success" style="justify-content:flex-start; text-align:left; padding:10px 12px;" onclick="openSpeedWithFilter('ALL_CORRECT_18')">
+            <div>
+              <div style="font-weight:800; font-size:14px;">✅ 18 Câu: "Tất cả đều đúng"</div>
+              <div style="font-size:11.5px; opacity:0.85;">Chọn D là ĐÚNG (Câu 2, 10, 11, 101, 113...)</div>
+            </div>
+          </button>
+          <button class="btn btn-outline-success" style="justify-content:flex-start; text-align:left; padding:10px 12px;" onclick="openSpeedWithFilter('TWO_CORRECT_20')">
+            <div>
+              <div style="font-weight:800; font-size:14px;">✅ 20 Câu: "Hai ý (A&B/B&C) đúng"</div>
+              <div style="font-size:11.5px; opacity:0.85;">17 câu chọn D + 3 câu chọn C (9, 107, 252)</div>
+            </div>
+          </button>
+          <button class="btn btn-outline-danger" style="justify-content:flex-start; text-align:left; padding:10px 12px;" onclick="openSpeedWithFilter('TRAP_ALL_16')">
+            <div>
+              <div style="font-weight:800; font-size:14px;">⚠️ 16 Câu BẪY: Có "Tất cả đúng"</div>
+              <div style="font-size:11.5px; opacity:0.85;">Có dòng "Tất cả đúng" nhưng KHÔNG chọn D!</div>
+            </div>
+          </button>
+          <button class="btn btn-outline-warning" style="justify-content:flex-start; text-align:left; padding:10px 12px;" onclick="openSpeedWithFilter('TRAP_TWO_30')">
+            <div>
+              <div style="font-weight:800; font-size:14px;">⚠️ 30 Câu BẪY: Có "Hai ý đúng"</div>
+              <div style="font-size:11.5px; opacity:0.85;">Có dòng "A và B/C đúng" nhưng chỉ 1 ý đúng!</div>
+            </div>
+          </button>
+          <button class="btn btn-outline-primary" style="justify-content:flex-start; text-align:left; padding:10px 12px;" onclick="openSpeedWithFilter('ALL_WRONG_3')">
+            <div>
+              <div style="font-weight:800; font-size:14px;">❌ 03 Câu: "Các ý trên đều sai"</div>
+              <div style="font-size:11.5px; opacity:0.85;">Chỉ có 3 câu chọn D: Câu 296, 301, 314</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
       <div class="section-header">
         <div class="section-title">📂 Học Theo 10 Chuyên Đề Trọng Tâm</div>
       </div>
@@ -1898,11 +1944,35 @@ body.mobile-view .fc-hint {
             <select id="speed-status-filter" class="select-control">
               <option value="ALL">📌 Mọi trạng thái (340 câu)</option>
               <option value="TRAP">🔥 72 Câu Dễ Sai & Nhiều Bẫy Nhất</option>
+              <option value="ALL_CORRECT_18">✅ 18 Câu chọn "Tất cả các ý đều đúng"</option>
+              <option value="TWO_CORRECT_20">✅ 20 Câu chọn "Hai ý (A&B / B&C) đều đúng"</option>
+              <option value="COMBINED_38">✅ Tổng 38 Câu chọn Đáp án gộp ĐÚNG</option>
+              <option value="TRAP_ALL_16">⚠️ 16 Câu BẪY có "Tất cả đúng" nhưng KHÔNG chọn</option>
+              <option value="TRAP_TWO_30">⚠️ 30 Câu BẪY có "Hai ý đúng" nhưng KHÔNG chọn</option>
+              <option value="ALL_WRONG_3">❌ 03 Câu chọn "Các phương án trên đều sai"</option>
               <option value="UNLEARNED">⏳ Chưa thuộc</option>
               <option value="MASTERED">✅ Đã thuộc lòng</option>
               <option value="WRONG">❌ Câu hay làm sai</option>
               <option value="BOOKMARKED">⭐ Câu đánh dấu sao</option>
             </select>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <span style="font-size:12px; font-weight:700; color:var(--text-muted);">🏷️ Từ khóa tra nhanh:</span>
+            <button class="q-chip" onclick="quickKeywordSearch('05 ngày làm việc')">05 ngày làm việc</button>
+            <button class="q-chip" onclick="quickKeywordSearch('03 ngày làm việc')">03 ngày làm việc</button>
+            <button class="q-chip" onclick="quickKeywordSearch('500 triệu')">500 triệu</button>
+            <button class="q-chip" onclick="quickKeywordSearch('hợp đồng tương tự')">Hợp đồng tương tự</button>
+            <button class="q-chip" onclick="quickKeywordSearch('cấm tham gia')">Cấm thầu</button>
+            <button class="q-chip" onclick="quickKeywordSearch('kiến nghị')">Kiến nghị</button>
+            <button class="q-chip" onclick="quickKeywordSearch('liên danh')">Liên danh</button>
+            <button class="q-chip" onclick="quickKeywordSearch('chào giá trực tuyến')">Chào giá trực tuyến</button>
+            <button class="q-chip" onclick="quickKeywordSearch('mua sắm trực tuyến')">Mua sắm trực tuyến</button>
+            <button class="q-chip" onclick="quickKeywordSearch('mua sắm tập trung')">Mua sắm tập trung</button>
+            <button class="q-chip" onclick="quickKeywordSearch('bảo đảm thực hiện hợp đồng')">Bảo đảm THHĐ</button>
+            <button class="q-chip" onclick="quickKeywordSearch('hủy thầu')">Hủy thầu</button>
+            <button class="q-chip" onclick="quickKeywordSearch('CPTPP')">CPTPP / Hiệp định</button>
+            <button class="q-chip" style="color:var(--danger); border-color:var(--danger-border);" onclick="quickKeywordSearch('')">✖ Xóa lọc từ khóa</button>
           </div>
 
           <div class="toolbar-row" style="justify-content: space-between;">
@@ -1951,6 +2021,11 @@ body.mobile-view .fc-hint {
             <select id="fc-status-filter" class="select-control" style="flex:1; min-width:160px;">
               <option value="ALL">📌 Tất cả thẻ (340)</option>
               <option value="TRAP">🔥 Chỉ 72 thẻ Câu Dễ Sai & Bẫy Nhất</option>
+              <option value="ALL_CORRECT_18">✅ 18 Câu chọn "Tất cả đều đúng"</option>
+              <option value="TWO_CORRECT_20">✅ 20 Câu chọn "Hai ý đều đúng"</option>
+              <option value="TRAP_ALL_16">⚠️ 16 Câu BẪY có "Tất cả đều đúng"</option>
+              <option value="TRAP_TWO_30">⚠️ 30 Câu BẪY có "Hai ý đều đúng"</option>
+              <option value="ALL_WRONG_3">❌ 03 Câu chọn "Các ý đều sai"</option>
               <option value="UNLEARNED">⏳ Chỉ thẻ Chưa thuộc</option>
               <option value="WRONG">❌ Chỉ thẻ Hay sai</option>
               <option value="BOOKMARKED">⭐ Chỉ thẻ Đánh dấu sao</option>
@@ -2021,6 +2096,11 @@ body.mobile-view .fc-hint {
               <select id="prac-status-filter" class="select-control">
                 <option value="ALL">📌 Tất cả câu hỏi</option>
                 <option value="TRAP">🔥 Chỉ 72 câu Dễ Sai & Bẫy Nhất</option>
+                <option value="ALL_CORRECT_18">✅ 18 Câu chọn "Tất cả đều đúng"</option>
+                <option value="TWO_CORRECT_20">✅ 20 Câu chọn "Hai ý đều đúng"</option>
+                <option value="TRAP_ALL_16">⚠️ 16 Câu BẪY có "Tất cả đều đúng"</option>
+                <option value="TRAP_TWO_30">⚠️ 30 Câu BẪY có "Hai ý đều đúng"</option>
+                <option value="ALL_WRONG_3">❌ 03 Câu chọn "Các ý đều sai"</option>
                 <option value="UNLEARNED">⏳ Chỉ câu Chưa thuộc</option>
                 <option value="WRONG">❌ Chỉ câu Hay làm sai</option>
                 <option value="BOOKMARKED">⭐ Chỉ câu Đánh dấu sao</option>
@@ -2624,29 +2704,34 @@ window.MASTER_TIPS = [
   },
   {
     id: "all-above-traps",
-    title: "6. Bí Kíp Chọn Nhanh Câu 'Tất Cả Đều Đúng / A & B Đều Đúng' Và Các Câu Bẫy!",
+    title: "6. Thống Kê Đầy Đủ Các Câu 'Tất Cả Đều Đúng' (18 Câu), 'Hai Ý Đúng' (20 Câu) & Câu Bẫy",
     icon: "🎯",
-    badge: "Mẹo thần tốc",
-    summary: "Trong 340 câu, có hơn 55 câu có đáp án dạng 'Tất cả phương án trên đều đúng' hoặc 'Phương án A và B/C đều đúng'. Bạn chỉ cần nhớ các câu NGOẠI LỆ (Bẫy) dưới đây, còn lại cứ thấy 'Tất cả đều đúng / A và B đều đúng' là chọn ngay!",
+    badge: "Thống kê 100%",
+    summary: "Trong 340 câu: Có chính xác 18 câu chọn 'Tất cả các ý đều đúng' + 20 câu chọn 'Hai ý (A&B / B&C / A&C) đều đúng' (= 38 câu đáp án gộp). Hãy thuộc 16 câu BẪY không chọn 'Tất cả đều đúng' dưới đây để đạt độ chính xác 100%!",
     items: [
       {
-        key: "Quy tắc vàng: Hầu hết câu có 'Phương án A và B/C đều đúng' hoặc 'Tất cả đều đúng' là ĐÁP ÁN ĐÚNG!",
-        rule: "Các câu chọn D ('Tất cả đều đúng' hoặc 'A và B/C đều đúng'): Câu 2, 6, 10, 11, 44, 45, 71, 90, 93, 101, 113, 118, 123, 135, 138, 176, 184, 209, 211, 213, 221, 222, 224, 231, 233, 238, 241, 256, 260, 261, 262, 272, 275, 277, 286, 298.\nCâu chọn C ('A và B đều đúng'): Câu 9, 107, 117, 252.",
-        questions: [2, 6, 9, 10, 11, 44, 45, 71, 90, 93, 101, 107, 113, 117, 118, 123, 135, 138, 176, 184, 209, 211, 213, 221, 222, 224, 231, 233, 238, 241, 252, 256, 260, 261, 262, 272, 275, 277, 286, 298]
+        key: "✅ 18 Câu chọn 'Tất cả các phương án/đáp án trên đều đúng' (Chọn D)",
+        rule: "Trong toàn bộ 340 câu có 34 câu xuất hiện dòng 'Tất cả/Các phương án trên đều đúng' hoặc 'Cả 3 phương án đều đúng', trong đó có ĐÚNG 18 CÂU chọn đáp án D là ĐÚNG:\n• Câu 2 (Phạm vi điều chỉnh Luật Đấu thầu)\n• Câu 10, 11 (Đối tượng và nhà thầu trong nước được hưởng ưu đãi)\n• Câu 101 (Xử lý khi rút E-HSDT sau đóng thầu)\n• Câu 113 (HĐ tương tự gói vệ sinh tòa nhà 1 tỷ)\n• Câu 118 (Chứng minh cam kết cung cấp tín dụng)\n• Câu 123 (Tài liệu thuộc hồ sơ hợp đồng)\n• Câu 135 (Thương thảo HĐ gói 1 giai đoạn 1 túi hồ sơ)\n• Câu 184 (Công khai tài liệu giải quyết kiến nghị)\n• Câu 213, 256 (Giá trị văn bản điện tử trên Hệ thống)\n• Câu 222 (Công việc phải thực hiện trên Hệ thống)\n• Câu 231 (Trách nhiệm nhà thầu khi tham dự thầu qua mạng)\n• Câu 238 (Đánh giá kết quả hoạt động tài chính qua mạng)\n• Câu 260 (Các gói thầu không phải đấu thầu qua mạng)\n• Câu 262 (Trách nhiệm theo dõi khi sửa đổi E-HSMT)\n• Câu 277 (Bảo lãnh dự thầu điện tử luôn đáp ứng giá trị, hiệu lực, thụ hưởng)\n• Câu 286 (Trường hợp áp dụng hợp đồng theo thời gian).",
+        questions: [2, 10, 11, 101, 113, 118, 123, 135, 184, 213, 222, 231, 238, 256, 260, 262, 277, 286]
       },
       {
-        key: "⚠️ CẢNH GIÁC NHÓM BẪY 1: Có phương án 'Tất cả phương án trên đều đúng' nhưng KHÔNG CHỌN D!",
-        rule: "Chỉ có 14 câu bẫy loại này trong toàn bộ 340 câu - hãy học thuộc mặt 14 câu này:\n• Câu 30 (Phát hành HSMT không qua mạng): Chọn A (Phê duyệt và phát hành trên Hệ thống mạng ĐTQG).\n• Câu 43 (Nội dung KHLCNT): Chọn A (Giá gói thầu - vì thời gian thực hiện HĐ đã bỏ, thay bằng thời gian thực hiện gói thầu).\n• Câu 46 (Giá trị công việc đã thực hiện khi đã thanh lý HĐ): Chọn B (Giá trị thanh lý hợp đồng).\n• Câu 73 (HĐ tương tự mua 20 máy điều hòa): Chọn A (Cùng lĩnh vực tổng quát).\n• Câu 92 (HĐ xây lắp tương tự 1 công trình độc lập): Chọn A (Hoàn thành toàn bộ hoặc phần lớn...).\n• Câu 110 (Bảo lãnh dự thầu không hợp lệ): Chọn C (Ký trước khi phát hành HSMT).\n• Câu 115 (Thầu phụ của liên danh): Chọn A (20% trên phần việc từng thành viên đảm nhận).\n• Câu 232 (Khi nào phải nộp lại E-HSDT): Chọn C (Khi E-HSMT được sửa đổi).\n• Câu 237 (Hệ thống tự động đánh giá): Chọn C (Doanh thu bình quân 3 năm gần nhất).\n• Câu 247 (Xác nhận chấp thuận trao HĐ): Chọn C (Chào giá trực tuyến rút gọn).\n• Câu 269 (Phương thức LCNT qua mạng): Chọn A (01 giai đoạn 01 túi hồ sơ - trong các đáp án liệt kê).\n• Câu 273 (Yêu cầu file đăng tải trên Hệ thống): Chọn C (Không nhiễm virus, không lỗi hỏng, không mật khẩu - vì câu A ghi 'không thuộc Unicode' là sai!).\n• Câu 274 (File đính kèm trong E-HSMT không mở được): Chọn A (Đăng tải và phát hành lại toàn bộ E-HSMT).\n• Câu 300 (Chữ ký biên bản mở thầu không qua mạng): Chọn C (Chủ đầu tư và các nhà thầu tham dự lễ mở thầu).",
-        questions: [30, 43, 46, 73, 92, 110, 115, 232, 237, 247, 269, 273, 274, 300]
+        key: "✅ 20 Câu chọn 'Hai phương án (A&B / B&C / A&C) đều đúng'",
+        rule: "Có 20 câu mà đáp án đúng là phương án gộp 2 ý:\n• 17 câu chọn D ('A và B/C đều đúng' hoặc 'B và C đều đúng'): Câu 6 (Khái niệm đấu thầu), Câu 44 (Mua sắm ≤ 50 triệu), Câu 45 (Đền bù GPMB), Câu 71 (Lao động trong nước đấu thầu quốc tế), Câu 90 (Chỉ có 1 nhà thầu nộp HSDT gói xây lắp), Câu 93 (HĐ hàng hóa tương tự: lĩnh vực tổng quát hoặc 4 số mã HS), Câu 138 (Đơn vị mua sắm tập trung), Câu 176 (Không hoàn trả phí kiến nghị), Câu 209 (HSDT không cân bằng), Câu 211 (Tịch thu BĐTHHĐ liên danh), Câu 221 (Thời gian mua sắm trực tuyến 24 tháng), Câu 224 (Tài liệu đăng tải khi sửa đổi E-HSMT), Câu 233 (Không có nhà thầu nộp E-HSDT), Câu 241 (Gia hạn hiệu lực HSDT), Câu 261 (Thời điểm hủy E-TBMT), Câu 272 (File đính kèm không coi là 1 phần E-HSMT), Câu 275 (Thời điểm đóng thầu khi hệ thống sự cố).\n• 03 câu chọn C ('A và B đều đúng'): Câu 9 (Khái niệm hàng hóa), Câu 107 (HĐ tương tự cung cấp thuốc cho y tế tư nhân & cơ sở kinh doanh thuốc), Câu 252 (Ký hợp đồng điện tử trong mua sắm tập trung).",
+        questions: [6, 9, 44, 45, 71, 90, 93, 107, 138, 176, 209, 211, 221, 224, 233, 241, 252, 261, 272, 275]
       },
       {
-        key: "⚠️ CẢNH GIÁC NHÓM BẪY 2: Có phương án 'Phương án A và B/C đều đúng' nhưng KHÔNG CHỌN D!",
-        rule: "Các câu bẫy có 'A và B/C đều đúng' nhưng chỉ có 1 ý đúng:\n• Câu 20 (Phát hành HSMT quốc tế): Chọn A (Phát hành trên Hệ thống mạng ĐTQG).\n• Câu 27 (Giữ lại HS tài chính quá hạn): Chọn C (Có thể dẫn tới khiếu nại).\n• Câu 29 (Nhà thầu phụ đặc biệt): Chọn A (Chuyển đổi số, KHCN được dùng thầu phụ đặc biệt nước ngoài).\n• Câu 41 (Đăng tải KHLCNT): Chọn A (Hệ thống mạng ĐTQG).\n• Câu 59 (Căn cứ lập HSMT): Chọn C (KHLCNT được duyệt).\n• Câu 85 (Chào hàng cạnh tranh không yêu cầu NLKN): Chọn A (Chỉ cần cam kết trong đơn dự thầu).\n• Câu 89 (Thẩm định danh sách xếp hạng): Chọn B (Không phải thẩm định).\n• Câu 103 (Liên danh 1 hạng mục máy chủ): Chọn A (Phân chia theo công việc thuộc quá trình sản xuất).\n• Câu 108 (Thay đổi nhân sự tư vấn khi thương thảo): Chọn C (Do thời gian đánh giá kéo dài hoặc bất khả kháng).\n• Câu 114 (HĐ tương tự khác mã HS): Chọn A (Tách 1 mã HS ra 2 hợp đồng là không đáp ứng).\n• Câu 125 (HĐ đơn giá cố định giảm khối lượng thực tế): Chọn B (Không cần ký văn bản sửa đổi HĐ).\n• Câu 131, 132 (Thời gian phê duyệt HSMT, KQLCNT): Chọn A (Do Chủ đầu tư quyết định).\n• Câu 139 (Thỏa thuận khung): Chọn B (Quy định trong KHLCNT nhưng không quá 36 tháng).\n• Câu 148, 149 (Chỉ định thầu thông thường / Thuê tư vấn MSTT): Chọn C.\n• Câu 165 (Trong quá trình thực hiện HĐ): Chọn C (Không công nhận KQLCNT).\n• Câu 170 (Đánh giá uy tín không ký HĐ): Chọn B (Sử dụng để đánh giá kỹ thuật gói tư vấn).\n• Câu 183, 186, 193, 214, 242, 250, 253, 254, 255, 276, 294, 312, 318.",
-        questions: [20, 27, 29, 41, 59, 85, 89, 103, 108, 114, 125, 131, 132, 139, 148, 149, 165, 170, 183, 186, 193, 214, 242, 250, 253, 254, 255, 276, 294, 312, 318]
+        key: "⚠️ 16 Câu BẪY có 'Tất cả/Cả 3 đều đúng' nhưng TUYỆT ĐỐI KHÔNG CHỌN D!",
+        rule: "Chỉ có đúng 16 câu trong bộ 340 câu có dòng 'Tất cả/Các phương án trên đều đúng' nhưng đáp án đúng lại là A, B hoặc C:\n• Câu 30 (Phát hành HSMT không qua mạng): Chọn A (Phát hành trên Hệ thống mạng ĐTQG).\n• Câu 43 (Nội dung KHLCNT): Chọn A (Giá gói thầu).\n• Câu 46 (Giá trị công việc đã thực hiện khi đã thanh lý HĐ): Chọn B (Giá trị thanh lý hợp đồng).\n• Câu 73 (HĐ tương tự mua 20 máy điều hòa): Chọn A (Cùng lĩnh vực tổng quát).\n• Câu 92 (HĐ xây lắp tương tự 1 công trình độc lập): Chọn A (Hoàn thành toàn bộ hoặc phần lớn...).\n• Câu 110 (Bảo lãnh dự thầu không hợp lệ): Chọn C (Ký trước khi phát hành HSMT).\n• Câu 115 (Thầu phụ của liên danh): Chọn A (20% trên phần việc từng thành viên đảm nhận).\n• Câu 201 (Giải pháp khi hủy thầu): Chọn C (Không phải điều chỉnh thời gian bắt đầu tổ chức LCNT trong KHLCNT).\n• Câu 215 (Nhà thầu kê khai thông tin gì trên Hệ thống): Chọn C (Thông tin về năng lực, kinh nghiệm).\n• Câu 232 (Khi nào phải nộp lại E-HSDT): Chọn C (Khi E-HSMT được sửa đổi).\n• Câu 237 (Hệ thống tự động đánh giá): Chọn C (Doanh thu bình quân 3 năm gần nhất).\n• Câu 247 (Xác nhận chấp thuận trao HĐ): Chọn C (Chào giá trực tuyến rút gọn).\n• Câu 269 (Phương thức LCNT qua mạng): Chọn A (01 giai đoạn 01 túi hồ sơ).\n• Câu 273 (Yêu cầu file đăng tải trên Hệ thống): Chọn C (Không nhiễm virus, không lỗi hỏng, không mật khẩu).\n• Câu 274 (File đính kèm trong E-HSMT không mở được): Chọn A (Đăng tải và phát hành lại toàn bộ E-HSMT).\n• Câu 300 (Chữ ký biên bản mở thầu không qua mạng): Chọn C (Chủ đầu tư và các nhà thầu tham dự lễ mở thầu).",
+        questions: [30, 43, 46, 73, 92, 110, 115, 201, 215, 232, 237, 247, 269, 273, 274, 300]
       },
       {
-        key: "Nhóm câu có đáp án 'Các phương án trên đều sai' (Chọn D)",
-        rule: "Chỉ có 3 câu trong bộ đề mà đáp án đúng là D ('Tất cả/Các phương án trên đều sai'):\n• Câu 296 (Mua sắm trực tuyến dịch vụ tư vấn -> Sai vì mua sắm trực tuyến chỉ áp dụng cho hàng hóa, dịch vụ phi tư vấn thông dụng, KHÔNG áp dụng cho dịch vụ tư vấn!).\n• Câu 301 (Đấu thầu qua mạng đánh giá bản chụp/bản gốc -> Sai vì đấu thầu qua mạng dùng văn bản điện tử/webform, không có khái niệm bản chụp/bản gốc như đấu thầu giấy!).\n• Câu 314 (Gói thầu bảo hiểm dùng giấy chứng nhận bảo hiểm bảo lãnh do chính mình phát hành -> Sai vì nhà thầu không được tự bảo lãnh cho chính mình ở mọi mệnh giá!).",
+        key: "⚠️ 30 Câu BẪY có 'Phương án A và B/C đều đúng' nhưng KHÔNG CHỌN!",
+        rule: "Các câu có phương án gộp 2 ý nhưng chỉ có 1 ý đúng duy nhất:\n• Câu 20 (Chọn A), Câu 27 (Chọn C), Câu 29 (Chọn A), Câu 41 (Chọn A), Câu 59 (Chọn C), Câu 85 (Chọn A), Câu 89 (Chọn B), Câu 103 (Chọn A), Câu 108 (Chọn C), Câu 125 (Chọn B), Câu 131 (Chọn A), Câu 132 (Chọn A), Câu 139 (Chọn B), Câu 148 (Chọn C), Câu 149 (Chọn C), Câu 165 (Chọn C), Câu 170 (Chọn B), Câu 183 (Chọn B), Câu 186 (Chọn C), Câu 193 (Chọn A), Câu 214 (Chọn C), Câu 242 (Chọn C), Câu 250 (Chọn C), Câu 253 (Chọn A), Câu 254 (Chọn C), Câu 255 (Chọn B), Câu 276 (Chọn C), Câu 294 (Chọn C), Câu 312 (Chọn B), Câu 318 (Chọn A).",
+        questions: [20, 27, 29, 41, 59, 85, 89, 103, 108, 125, 131, 132, 139, 148, 149, 165, 170, 183, 186, 193, 214, 242, 250, 253, 254, 255, 276, 294, 312, 318]
+      },
+      {
+        key: "❌ 03 Câu chọn 'Các phương án trên đều sai' (Chọn D)",
+        rule: "Trong 28 câu có xuất hiện dòng 'Tất cả/Các phương án trên đều sai', chỉ có ĐÚNG 3 CÂU chọn D là đáp án đúng (còn lại 25 câu kia không chọn D):\n• Câu 296 (Mua sắm trực tuyến dịch vụ tư vấn -> Sai vì mua sắm trực tuyến không áp dụng cho tư vấn).\n• Câu 301 (Đấu thầu qua mạng đánh giá bản chụp/bản gốc -> Sai vì đấu thầu qua mạng đánh giá trên dữ liệu điện tử).\n• Câu 314 (Gói thầu bảo hiểm dùng giấy chứng nhận bảo hiểm bảo lãnh do chính mình phát hành -> Sai vì không được tự bảo lãnh cho chính mình).",
         questions: [296, 301, 314]
       }
     ]
@@ -9557,6 +9642,21 @@ window.QUESTIONS_DATA = [
     else if (tabId === "tab-practice") renderPracticeCurrent();
   }
 
+  const SET_ALL_CORRECT_18 = new Set([2, 10, 11, 101, 113, 118, 123, 135, 184, 213, 222, 231, 238, 256, 260, 262, 277, 286]);
+  const SET_TWO_CORRECT_20 = new Set([6, 9, 44, 45, 71, 90, 93, 107, 138, 176, 209, 211, 221, 224, 233, 241, 252, 261, 272, 275]);
+  const SET_TRAP_ALL_16 = new Set([30, 43, 46, 73, 92, 110, 115, 201, 215, 232, 237, 247, 269, 273, 274, 300]);
+  const SET_TRAP_TWO_30 = new Set([20, 27, 29, 41, 59, 85, 89, 103, 108, 125, 131, 132, 139, 148, 149, 165, 170, 183, 186, 193, 214, 242, 250, 253, 254, 255, 276, 294, 312, 318]);
+  const SET_ALL_WRONG_3 = new Set([296, 301, 314]);
+
+  function normalizeVn(str) {
+    if (!str) return "";
+    return String(str)
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d");
+  }
+
   // Helper to filter questions by topic, range, status, search
   function filterQuestionList({ topic, range, status, search }) {
     let list = allQuestions.slice();
@@ -9575,6 +9675,18 @@ window.QUESTIONS_DATA = [
     if (status && status !== "ALL") {
       if (status === "TRAP") {
         list = list.filter((q) => !!q.is_trap);
+      } else if (status === "ALL_CORRECT_18") {
+        list = list.filter((q) => SET_ALL_CORRECT_18.has(q.id));
+      } else if (status === "TWO_CORRECT_20") {
+        list = list.filter((q) => SET_TWO_CORRECT_20.has(q.id));
+      } else if (status === "COMBINED_38") {
+        list = list.filter((q) => SET_ALL_CORRECT_18.has(q.id) || SET_TWO_CORRECT_20.has(q.id));
+      } else if (status === "TRAP_ALL_16") {
+        list = list.filter((q) => SET_TRAP_ALL_16.has(q.id));
+      } else if (status === "TRAP_TWO_30") {
+        list = list.filter((q) => SET_TRAP_TWO_30.has(q.id));
+      } else if (status === "ALL_WRONG_3") {
+        list = list.filter((q) => SET_ALL_WRONG_3.has(q.id));
       } else if (status === "MASTERED") {
         list = list.filter((q) => !!userProgress.mastered[q.id]);
       } else if (status === "UNLEARNED") {
@@ -9588,17 +9700,22 @@ window.QUESTIONS_DATA = [
 
     if (search && search.trim()) {
       const s = search.trim().toLowerCase();
+      const sNorm = normalizeVn(s);
       // Check if exact question number
-      const numMatch = s.match(/^(?:câu\s*)?(\d+)$/);
+      const numMatch = s.match(/^(?:câu\s*|cau\s*)?(\d+)$/);
       if (numMatch) {
         const targetId = Number(numMatch[1]);
         list = list.filter((q) => q.id === targetId || String(q.id).includes(numMatch[1]));
       } else {
         list = list.filter((q) => {
-          const inQ = q.question.toLowerCase().includes(s);
-          const inOpts = Object.values(q.options).some((v) => v.toLowerCase().includes(s));
-          const inTip = (q.tip || "").toLowerCase().includes(s);
-          const inExp = (q.explanation || "").toLowerCase().includes(s);
+          const inQ = q.question.toLowerCase().includes(s) || normalizeVn(q.question).includes(sNorm);
+          const inOpts = Object.values(q.options).some(
+            (v) => v.toLowerCase().includes(s) || normalizeVn(v).includes(sNorm)
+          );
+          const inTip = (q.tip || "").toLowerCase().includes(s) || normalizeVn(q.tip).includes(sNorm);
+          const inExp =
+            (q.explanation || "").toLowerCase().includes(s) ||
+            normalizeVn(q.explanation).includes(sNorm);
           return inQ || inOpts || inTip || inExp;
         });
       }
@@ -9606,6 +9723,21 @@ window.QUESTIONS_DATA = [
 
     return list;
   }
+
+  window.quickKeywordSearch = function (kw) {
+    const speedSearch = document.getElementById("speed-search");
+    const globalSearch = document.getElementById("global-keyword-search");
+    const statusSel = document.getElementById("speed-status-filter");
+    const topicSel = document.getElementById("speed-topic-filter");
+    const rangeSel = document.getElementById("speed-range-filter");
+    if (speedSearch) speedSearch.value = kw;
+    if (globalSearch) globalSearch.value = kw;
+    if (statusSel) statusSel.value = "ALL";
+    if (topicSel) topicSel.value = "ALL";
+    if (rangeSel) rangeSel.value = "ALL";
+    applySpeedFilters(false);
+    switchTab("tab-speed");
+  };
 
   // TAB 3: Speed Memorization Mode
   function applySpeedFilters(doShuffle) {
@@ -10930,8 +11062,22 @@ window.QUESTIONS_DATA = [
       document.getElementById(id)?.addEventListener("change", () => applySpeedFilters(false));
     });
 
-    document.getElementById("speed-search")?.addEventListener("input", () => {
+    document.getElementById("speed-search")?.addEventListener("input", (e) => {
+      const gSearch = document.getElementById("global-keyword-search");
+      if (gSearch && gSearch.value !== e.target.value) gSearch.value = e.target.value;
       applySpeedFilters(false);
+    });
+
+    document.getElementById("global-keyword-search")?.addEventListener("input", (e) => {
+      const val = e.target.value;
+      const sSearch = document.getElementById("speed-search");
+      if (sSearch) sSearch.value = val;
+      applySpeedFilters(false);
+      const activeTab = document.querySelector(".nav-tab.active")?.getAttribute("data-tab");
+      if (activeTab !== "tab-speed") {
+        switchTab("tab-speed");
+        document.getElementById("global-keyword-search")?.focus();
+      }
     });
 
     const setupPillToggle = (chkId, pillId, onChange) => {

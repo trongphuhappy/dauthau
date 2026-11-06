@@ -433,6 +433,21 @@
     else if (tabId === "tab-practice") renderPracticeCurrent();
   }
 
+  const SET_ALL_CORRECT_18 = new Set([2, 10, 11, 101, 113, 118, 123, 135, 184, 213, 222, 231, 238, 256, 260, 262, 277, 286]);
+  const SET_TWO_CORRECT_20 = new Set([6, 9, 44, 45, 71, 90, 93, 107, 138, 176, 209, 211, 221, 224, 233, 241, 252, 261, 272, 275]);
+  const SET_TRAP_ALL_16 = new Set([30, 43, 46, 73, 92, 110, 115, 201, 215, 232, 237, 247, 269, 273, 274, 300]);
+  const SET_TRAP_TWO_30 = new Set([20, 27, 29, 41, 59, 85, 89, 103, 108, 125, 131, 132, 139, 148, 149, 165, 170, 183, 186, 193, 214, 242, 250, 253, 254, 255, 276, 294, 312, 318]);
+  const SET_ALL_WRONG_3 = new Set([296, 301, 314]);
+
+  function normalizeVn(str) {
+    if (!str) return "";
+    return String(str)
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d");
+  }
+
   // Helper to filter questions by topic, range, status, search
   function filterQuestionList({ topic, range, status, search }) {
     let list = allQuestions.slice();
@@ -451,6 +466,18 @@
     if (status && status !== "ALL") {
       if (status === "TRAP") {
         list = list.filter((q) => !!q.is_trap);
+      } else if (status === "ALL_CORRECT_18") {
+        list = list.filter((q) => SET_ALL_CORRECT_18.has(q.id));
+      } else if (status === "TWO_CORRECT_20") {
+        list = list.filter((q) => SET_TWO_CORRECT_20.has(q.id));
+      } else if (status === "COMBINED_38") {
+        list = list.filter((q) => SET_ALL_CORRECT_18.has(q.id) || SET_TWO_CORRECT_20.has(q.id));
+      } else if (status === "TRAP_ALL_16") {
+        list = list.filter((q) => SET_TRAP_ALL_16.has(q.id));
+      } else if (status === "TRAP_TWO_30") {
+        list = list.filter((q) => SET_TRAP_TWO_30.has(q.id));
+      } else if (status === "ALL_WRONG_3") {
+        list = list.filter((q) => SET_ALL_WRONG_3.has(q.id));
       } else if (status === "MASTERED") {
         list = list.filter((q) => !!userProgress.mastered[q.id]);
       } else if (status === "UNLEARNED") {
@@ -464,17 +491,22 @@
 
     if (search && search.trim()) {
       const s = search.trim().toLowerCase();
+      const sNorm = normalizeVn(s);
       // Check if exact question number
-      const numMatch = s.match(/^(?:câu\s*)?(\d+)$/);
+      const numMatch = s.match(/^(?:câu\s*|cau\s*)?(\d+)$/);
       if (numMatch) {
         const targetId = Number(numMatch[1]);
         list = list.filter((q) => q.id === targetId || String(q.id).includes(numMatch[1]));
       } else {
         list = list.filter((q) => {
-          const inQ = q.question.toLowerCase().includes(s);
-          const inOpts = Object.values(q.options).some((v) => v.toLowerCase().includes(s));
-          const inTip = (q.tip || "").toLowerCase().includes(s);
-          const inExp = (q.explanation || "").toLowerCase().includes(s);
+          const inQ = q.question.toLowerCase().includes(s) || normalizeVn(q.question).includes(sNorm);
+          const inOpts = Object.values(q.options).some(
+            (v) => v.toLowerCase().includes(s) || normalizeVn(v).includes(sNorm)
+          );
+          const inTip = (q.tip || "").toLowerCase().includes(s) || normalizeVn(q.tip).includes(sNorm);
+          const inExp =
+            (q.explanation || "").toLowerCase().includes(s) ||
+            normalizeVn(q.explanation).includes(sNorm);
           return inQ || inOpts || inTip || inExp;
         });
       }
@@ -482,6 +514,21 @@
 
     return list;
   }
+
+  window.quickKeywordSearch = function (kw) {
+    const speedSearch = document.getElementById("speed-search");
+    const globalSearch = document.getElementById("global-keyword-search");
+    const statusSel = document.getElementById("speed-status-filter");
+    const topicSel = document.getElementById("speed-topic-filter");
+    const rangeSel = document.getElementById("speed-range-filter");
+    if (speedSearch) speedSearch.value = kw;
+    if (globalSearch) globalSearch.value = kw;
+    if (statusSel) statusSel.value = "ALL";
+    if (topicSel) topicSel.value = "ALL";
+    if (rangeSel) rangeSel.value = "ALL";
+    applySpeedFilters(false);
+    switchTab("tab-speed");
+  };
 
   // TAB 3: Speed Memorization Mode
   function applySpeedFilters(doShuffle) {
@@ -1806,8 +1853,22 @@
       document.getElementById(id)?.addEventListener("change", () => applySpeedFilters(false));
     });
 
-    document.getElementById("speed-search")?.addEventListener("input", () => {
+    document.getElementById("speed-search")?.addEventListener("input", (e) => {
+      const gSearch = document.getElementById("global-keyword-search");
+      if (gSearch && gSearch.value !== e.target.value) gSearch.value = e.target.value;
       applySpeedFilters(false);
+    });
+
+    document.getElementById("global-keyword-search")?.addEventListener("input", (e) => {
+      const val = e.target.value;
+      const sSearch = document.getElementById("speed-search");
+      if (sSearch) sSearch.value = val;
+      applySpeedFilters(false);
+      const activeTab = document.querySelector(".nav-tab.active")?.getAttribute("data-tab");
+      if (activeTab !== "tab-speed") {
+        switchTab("tab-speed");
+        document.getElementById("global-keyword-search")?.focus();
+      }
     });
 
     const setupPillToggle = (chkId, pillId, onChange) => {
