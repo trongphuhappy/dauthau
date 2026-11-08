@@ -144,7 +144,7 @@
     } catch (e) {
       console.warn("Could not load progress:", e);
     }
-    applyTheme(userProgress.theme || "light");
+    applyTheme(userProgress.galaxyTheme || "dark");
   }
 
   function saveProgress() {
@@ -158,12 +158,46 @@
 
   function applyTheme(theme) {
     userProgress.theme = theme;
+    userProgress.galaxyTheme = theme;
     document.documentElement.setAttribute("data-theme", theme);
     const btn = document.getElementById("btn-theme-toggle");
     if (btn) {
-      btn.innerHTML = theme === "dark" ? "☀️ Giao diện sáng" : "🌙 Giao diện tối";
+      btn.innerHTML = theme === "dark" ? "☀️ Sáng" : "🌌 Galaxy";
     }
   }
+
+  window.shareTammiApp = function () {
+    const shareTitle = "Viettel Tammi - Siêu ứng dụng Kết nối & Cuộc sống số Việt Nam";
+    const shareText =
+      "🌟 Mời bạn tải trải nghiệm siêu ứng dụng thuần Việt Viettel Tammi (Nhắn tin/Gọi OTT bảo mật, Họp trực tuyến 500 người, Trợ lý AI, 2.000+ sách nói Tammi Books & miễn phí Data Viettel): https://tammi.vn/download-app";
+    const shareUrl = "https://tammi.vn/download-app";
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl
+        })
+        .catch(() => {});
+      return;
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        const btn = document.getElementById("btn-share-tammi");
+        if (btn) {
+          const orig = btn.innerHTML;
+          btn.innerHTML = "✅ Đã sao chép lời mời & link tải Tammi!";
+          setTimeout(() => {
+            btn.innerHTML = orig;
+          }, 2800);
+        }
+      });
+    } else {
+      window.open(shareUrl, "_blank");
+    }
+  };
 
   // Initialize Data
   function initApp() {

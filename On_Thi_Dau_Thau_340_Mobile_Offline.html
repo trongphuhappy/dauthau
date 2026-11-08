@@ -1,84 +1,89 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="light">
+<html lang="vi" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#1e3a8a" />
+  <meta name="theme-color" content="#090d1f" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Đấu Thầu 340" />
   <link rel="manifest" href="manifest.json" />
-  <title>Học Nhanh 340 Câu Chứng Chỉ Đấu Thầu – Mẹo Nhớ & Thi Thử</title>
+  <title>Đấu Thầu 340 • Aether Galaxy – Học Siêu Tốc, Mẹo Lụi Chuẩn & Thi Thử</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
 :root {
-  --bg-body: #f1f5f9;
-  --bg-card: #ffffff;
-  --bg-subtle: #f8fafc;
-  --bg-hover: #f1f5f9;
+  --bg-body: #f4f6fb;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-subtle: #f1f5f9;
+  --bg-hover: #e2e8f0;
   --text-main: #0f172a;
-  --text-secondary: #475569;
+  --text-secondary: #334155;
   --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #eff6ff;
-  --primary-border: #bfdbfe;
+  --border-color: rgba(148, 163, 184, 0.28);
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: rgba(79, 70, 229, 0.1);
+  --primary-border: rgba(99, 102, 241, 0.32);
   --success: #059669;
-  --success-light: #ecfdf5;
-  --success-border: #a7f3d0;
+  --success-light: rgba(16, 185, 129, 0.1);
+  --success-border: rgba(16, 185, 129, 0.32);
   --warning: #d97706;
-  --warning-light: #fffbeb;
-  --warning-border: #fde68a;
-  --danger: #dc2626;
-  --danger-light: #fef2f2;
-  --danger-border: #fecaca;
+  --warning-light: rgba(245, 158, 11, 0.12);
+  --warning-border: rgba(245, 158, 11, 0.35);
+  --danger: #e11d48;
+  --danger-light: rgba(225, 29, 72, 0.09);
+  --danger-border: rgba(244, 63, 94, 0.32);
   --purple: #7c3aed;
-  --purple-light: #f5f3ff;
-  --purple-border: #ddd6fe;
+  --purple-light: rgba(124, 58, 237, 0.1);
+  --purple-border: rgba(139, 92, 246, 0.3);
   --hl-question: #fef08a;
-  --hl-question-text: #854d0e;
+  --hl-question-text: #713f12;
   --hl-answer: #bbf7d0;
   --hl-answer-text: #14532d;
-  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-  --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.06);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8px 24px -4px rgba(30, 27, 75, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 40px -10px rgba(49, 46, 129, 0.16), 0 8px 16px -6px rgba(15, 23, 42, 0.06);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --header-bg: rgba(255, 255, 255, 0.84);
 }
 
 [data-theme="dark"] {
-  --bg-body: #0b1120;
-  --bg-card: #1e293b;
-  --bg-subtle: #0f172a;
-  --bg-hover: #334155;
+  --bg-body: #070a17;
+  --bg-card: rgba(17, 23, 46, 0.78);
+  --bg-subtle: rgba(11, 15, 32, 0.85);
+  --bg-hover: rgba(30, 41, 75, 0.85);
   --text-main: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
-  --border-color: #334155;
-  --primary: #3b82f6;
-  --primary-hover: #60a5fa;
-  --primary-light: rgba(59, 130, 246, 0.15);
-  --primary-border: rgba(59, 130, 246, 0.35);
-  --success: #10b981;
-  --success-light: rgba(16, 185, 129, 0.15);
-  --success-border: rgba(16, 185, 129, 0.35);
-  --warning: #f59e0b;
-  --warning-light: rgba(245, 158, 11, 0.15);
-  --warning-border: rgba(245, 158, 11, 0.35);
-  --danger: #ef4444;
-  --danger-light: rgba(239, 68, 68, 0.15);
-  --danger-border: rgba(239, 68, 68, 0.35);
-  --purple: #8b5cf6;
-  --purple-light: rgba(139, 92, 246, 0.15);
-  --purple-border: rgba(139, 92, 246, 0.35);
-  --hl-question: rgba(250, 204, 21, 0.28);
+  --border-color: rgba(139, 92, 246, 0.22);
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --primary-light: rgba(99, 102, 241, 0.18);
+  --primary-border: rgba(129, 140, 248, 0.38);
+  --success: #34d399;
+  --success-light: rgba(16, 185, 129, 0.16);
+  --success-border: rgba(52, 211, 153, 0.35);
+  --warning: #fbbf24;
+  --warning-light: rgba(245, 158, 11, 0.16);
+  --warning-border: rgba(251, 191, 36, 0.35);
+  --danger: #fb7185;
+  --danger-light: rgba(244, 63, 94, 0.16);
+  --danger-border: rgba(251, 113, 133, 0.38);
+  --purple: #c084fc;
+  --purple-light: rgba(192, 132, 252, 0.16);
+  --purple-border: rgba(192, 132, 252, 0.38);
+  --hl-question: rgba(250, 204, 21, 0.24);
   --hl-question-text: #fde047;
-  --hl-answer: rgba(34, 197, 94, 0.28);
-  --hl-answer-text: #86efac;
+  --hl-answer: rgba(52, 211, 153, 0.24);
+  --hl-answer-text: #6ee7b7;
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 12px 30px -6px rgba(0, 0, 0, 0.45), 0 0 20px rgba(99, 102, 241, 0.08);
+  --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.65), 0 0 32px rgba(139, 92, 246, 0.16);
+  --header-bg: rgba(9, 13, 30, 0.82);
 }
 
 * {
@@ -90,6 +95,11 @@
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg-body);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(99, 102, 241, 0.16) 0%, transparent 38%),
+    radial-gradient(circle at 88% 14%, rgba(217, 70, 239, 0.13) 0%, transparent 36%),
+    radial-gradient(circle at 50% 85%, rgba(14, 165, 233, 0.11) 0%, transparent 45%);
+  background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
@@ -97,9 +107,20 @@ body {
   flex-direction: column;
 }
 
+[data-theme="dark"] body {
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(99, 102, 241, 0.24) 0%, transparent 36%),
+    radial-gradient(circle at 85% 12%, rgba(217, 70, 239, 0.18) 0%, transparent 34%),
+    radial-gradient(circle at 50% 60%, rgba(14, 165, 233, 0.1) 0%, transparent 45%),
+    radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 34px 34px;
+}
+
 /* Header & Navigation */
 .app-header {
-  background: var(--bg-card);
+  background: var(--header-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -108,13 +129,13 @@ body {
 }
 
 .header-top {
-  max-width: 1400px;
+  max-width: 1380px;
   margin: 0 auto;
   padding: 12px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
@@ -125,17 +146,18 @@ body {
 }
 
 .brand-logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #4f46e5 0%, #9333ea 55%, #ec4899 100%);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  font-weight: 800;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
 }
 
 .brand-text h1 {
@@ -145,28 +167,65 @@ body {
   color: var(--text-main);
 }
 
+.galaxy-pill-badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(217, 70, 239, 0.22));
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: var(--purple);
+}
+
 .brand-text p {
   font-size: 12px;
   color: var(--text-muted);
 }
 
+.header-center-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.header-search-wrap {
+  min-width: 240px;
+  max-width: 340px;
+  flex: 1;
+}
+
+.header-search-wrap .input-control {
+  padding: 7px 14px 7px 34px;
+  font-size: 13px;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+}
+
 .header-stats-bar {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .mini-stat {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
+  gap: 5px;
+  padding: 4px 11px;
   border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12.5px;
+  font-weight: 700;
   background: var(--bg-subtle);
   border: 1px solid var(--border-color);
+  transition: transform 0.15s ease;
+}
+
+.mini-stat:hover {
+  transform: translateY(-1px);
 }
 
 .mini-stat.success {
@@ -190,18 +249,27 @@ body {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 
-/* Main Navigation Tabs */
-.nav-tabs {
-  max-width: 1400px;
+/* Floating Pill Dock Navigation */
+.nav-tabs-wrapper {
+  max-width: 1380px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 20px 10px;
+}
+
+.nav-tabs {
   display: flex;
   gap: 6px;
   overflow-x: auto;
   scrollbar-width: none;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  padding: 5px;
+  border-radius: 14px;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .nav-tabs::-webkit-scrollbar {
@@ -209,49 +277,47 @@ body {
 }
 
 .nav-tab {
-  padding: 11px 16px;
+  padding: 8px 15px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13.5px;
+  font-weight: 700;
   cursor: pointer;
-  border-bottom: 3px solid transparent;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
 }
 
 .nav-tab:hover {
-  color: var(--primary);
+  color: var(--text-main);
   background: var(--bg-hover);
-  border-radius: 8px 8px 0 0;
 }
 
 .nav-tab.active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
-  background: var(--primary-light);
-  border-radius: 8px 8px 0 0;
+  color: #ffffff;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #c026d3 100%);
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.38);
 }
 
 .nav-badge {
-  font-size: 11px;
-  padding: 2px 7px;
+  font-size: 10px;
+  padding: 1px 6px;
   border-radius: 999px;
-  background: var(--primary);
-  color: #fff;
-  font-weight: 700;
+  background: #fde047;
+  color: #713f12;
+  font-weight: 900;
 }
 
 /* Main Container */
 .main-container {
-  max-width: 1400px;
+  max-width: 1380px;
   width: 100%;
   margin: 0 auto;
-  padding: 24px 20px 60px;
+  padding: 22px 20px 44px;
   flex: 1;
 }
 
@@ -277,38 +343,41 @@ body {
   gap: 7px;
   padding: 9px 16px;
   border-radius: var(--radius-sm);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13.5px;
+  font-weight: 700;
   cursor: pointer;
   border: 1px solid var(--border-color);
   background: var(--bg-card);
   color: var(--text-main);
-  transition: all 0.15s ease;
+  transition: all 0.16s ease;
   text-decoration: none;
 }
 
 .btn:hover {
   background: var(--bg-hover);
+  transform: translateY(-1px);
 }
 
 .btn-sm {
   padding: 6px 12px;
-  font-size: 13px;
+  font-size: 12.5px;
 }
 
 .btn-lg {
-  padding: 12px 22px;
-  font-size: 15px;
+  padding: 11px 20px;
+  font-size: 14.5px;
+  border-radius: 12px;
 }
 
 .btn-primary {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-color: rgba(139, 92, 246, 0.5);
   color: #ffffff;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover);
+  background: linear-gradient(135deg, #4338ca, #6d28d9);
 }
 
 .btn-success {
@@ -357,110 +426,179 @@ body {
   color: var(--danger);
 }
 
-/* Dashboard Cards */
+/* Dashboard Galaxy Hero Banner */
 .hero-banner {
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #4f46e5 100%);
+  background:
+    radial-gradient(circle at 85% 20%, rgba(236, 72, 153, 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 15% 80%, rgba(56, 189, 248, 0.25) 0%, transparent 45%),
+    linear-gradient(135deg, #0f172a 0%, #1e1b4b 45%, #3b0764 100%);
   color: #ffffff;
+  border: 1px solid rgba(168, 85, 247, 0.38);
   border-radius: var(--radius-lg);
   padding: 28px 32px;
   margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
   box-shadow: var(--shadow-lg);
 }
 
 .hero-content {
-  max-width: 760px;
+  max-width: 960px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #e879f9;
+  background: rgba(232, 121, 249, 0.14);
+  border: 1px solid rgba(232, 121, 249, 0.32);
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 10px;
 }
 
 .hero-content h2 {
-  font-size: 24px;
-  font-weight: 800;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
   margin-bottom: 8px;
+  background: linear-gradient(90deg, #ffffff 0%, #e0e7ff 60%, #f5d0fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-content p {
-  font-size: 15px;
-  opacity: 0.92;
+  font-size: 14.5px;
+  color: rgba(226, 232, 240, 0.92);
   margin-bottom: 18px;
+  max-width: 780px;
 }
 
 .hero-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
-.hero-actions .btn {
-  border: none;
-  font-weight: 700;
+.btn-galaxy-cta {
+  background: linear-gradient(135deg, #f43f5e 0%, #d946ef 55%, #8b5cf6 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 8px 20px rgba(217, 70, 239, 0.4);
+}
+
+.btn-galaxy-cta:hover {
+  background: linear-gradient(135deg, #e11d48 0%, #c026d3 55%, #7c3aed 100%);
+  box-shadow: 0 10px 25px rgba(217, 70, 239, 0.55);
 }
 
 .btn-white {
   background: #ffffff;
-  color: #1e3a8a;
+  color: #1e1b4b;
+  border: none !important;
 }
 
 .btn-white:hover {
-  background: #eff6ff;
+  background: #e0e7ff;
 }
 
 .btn-glass {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.11);
   color: #ffffff;
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
 }
 
 .btn-glass:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.hero-downloads-bar {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hero-dl-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(203, 213, 225, 0.85);
+}
+
+.hero-dl-chip {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.hero-dl-chip:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 16px;
-  margin-bottom: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
 }
 
 .stat-card {
   background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 18px 20px;
+  padding: 16px 18px;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-md);
+  border-color: var(--primary-border);
 }
 
 .stat-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12.5px;
+  font-weight: 700;
   color: var(--text-secondary);
 }
 
 .stat-card-value {
-  font-size: 28px;
-  font-weight: 800;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
   color: var(--text-main);
 }
 
 .stat-card-sub {
-  font-size: 12px;
+  font-size: 11.8px;
   color: var(--text-muted);
 }
 
@@ -2065,6 +2203,291 @@ body.mobile-view .quansu-window {
   height: 520px;
 }
 
+/* ==========================================================================
+   GALAXY FOOTER: VIETTEL TAMMI CALL-TO-ACTION + QR & "BY AETHER - 0961.860.865"
+   ========================================================================== */
+
+.galaxy-footer {
+  width: 100%;
+  margin-top: 28px;
+  padding: 0 20px 96px;
+}
+
+.galaxy-footer-inner {
+  max-width: 1340px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tammi-showcase-card {
+  background:
+    radial-gradient(circle at 90% 15%, rgba(238, 0, 51, 0.28) 0%, transparent 42%),
+    radial-gradient(circle at 12% 85%, rgba(99, 102, 241, 0.32) 0%, transparent 48%),
+    linear-gradient(135deg, #0d1226 0%, #1a1438 52%, #2d0f35 100%);
+  border: 1.5px solid rgba(236, 72, 153, 0.38);
+  border-radius: 24px;
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 28px;
+  align-items: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 35px rgba(217, 70, 239, 0.14);
+  color: #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+
+.tammi-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.tammi-brand-pill {
+  font-size: 11.5px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ee0033, #ff4d6d);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(238, 0, 51, 0.35);
+}
+
+.tammi-sub-pill {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fde047;
+}
+
+.tammi-headline {
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.tammi-headline span {
+  background: linear-gradient(90deg, #ff4d6d, #fde047, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tammi-desc {
+  font-size: 13.8px;
+  color: rgba(226, 232, 240, 0.92);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.tammi-features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 14px;
+  margin-bottom: 18px;
+}
+
+.tammi-feat-item {
+  font-size: 12.8px;
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 7px 11px;
+  border-radius: 10px;
+}
+
+.tammi-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-tammi-download {
+  background: linear-gradient(135deg, #ee0033 0%, #db2777 60%, #7c3aed 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(238, 0, 51, 0.35);
+}
+
+.btn-tammi-download:hover {
+  background: linear-gradient(135deg, #d0002c 0%, #be185d 60%, #6d28d9 100%);
+  color: #ffffff;
+}
+
+.btn-tammi-share {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.btn-tammi-share:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.tammi-qr-col {
+  display: flex;
+  justify-content: center;
+}
+
+.tammi-qr-box {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 14px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 4px rgba(255, 255, 255, 0.14);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 196px;
+}
+
+.tammi-qr-label-top {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: #ee0033;
+  background: #fff1f2;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid #fecdd3;
+}
+
+.tammi-qr-svg-wrap {
+  padding: 4px;
+  background: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tammi-store-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #334155;
+}
+
+.tammi-qr-url {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.footer-credit-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.aether-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.aether-signature strong {
+  background: linear-gradient(90deg, #818cf8, #e879f9, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.aether-phone {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  color: var(--primary);
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.aether-phone:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.footer-meta-note {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+@media (max-width: 860px) {
+  .tammi-showcase-card {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    text-align: left;
+  }
+  .tammi-features-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-credit-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+  .galaxy-footer {
+    padding: 0 12px 150px;
+  }
+}
+
+body.mobile-view .galaxy-footer {
+  max-width: 440px;
+  width: 100%;
+  background: var(--bg-body);
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  padding: 0 12px 150px;
+}
+
+body.mobile-view .tammi-showcase-card {
+  grid-template-columns: 1fr;
+  padding: 18px;
+}
+
+body.mobile-view .tammi-features-grid {
+  grid-template-columns: 1fr;
+}
+
+
 
 </style>
 </head>
@@ -2072,42 +2495,48 @@ body.mobile-view .quansu-window {
   <!-- Header -->
   <header class="app-header">
     <div class="header-top">
-      <div class="brand">
+      <div class="brand" onclick="switchTab('tab-dashboard')" style="cursor:pointer;">
         <div class="brand-logo">340</div>
         <div class="brand-text">
-          <h1>Ôn Thi Chứng Chỉ Nghiệp Vụ Đấu Thầu (340 Câu Cục Ban Hành)</h1>
-          <p>Học thuộc siêu tốc bằng Từ Khóa Vàng • Giải thích dễ hiểu • Thi thử xáo trộn câu (Cập nhật Luật 90/2025, NĐ 214/2025, TT 79 & 80/2025)</p>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <h1>Đấu Thầu 340</h1>
+            <span class="galaxy-pill-badge">✨ Aether Galaxy</span>
+          </div>
+          <p>Chứng chỉ Nghiệp vụ Đấu thầu • Luật 90/2025 & NĐ 214/2025</p>
         </div>
       </div>
 
-      <div class="header-stats-bar">
-        <span class="mini-stat success" onclick="openSpeedWithFilter('MASTERED')" style="cursor:pointer;" title="Số câu bạn đã đánh dấu thuộc lòng">
-          ✅ Thuộc: <strong id="hdr-mastered">0</strong>/340
-        </span>
-        <span class="mini-stat danger" onclick="openSpeedWithFilter('TRAP')" style="cursor:pointer;" title="Bấm để xem 72 câu bẫy dễ sai nhất">
-          🔥 72 Bẫy
-        </span>
-        <span class="mini-stat danger" onclick="openPracticeWithFilter('WRONG')" style="cursor:pointer;" title="Số câu bạn từng chọn sai">
-          ❌ Sai: <strong id="hdr-wrong">0</strong>
-        </span>
-        <span class="mini-stat warning" onclick="openSpeedWithFilter('BOOKMARKED')" style="cursor:pointer;" title="Số câu bạn đánh dấu sao">
-          ⭐ Lưu: <strong id="hdr-bookmarked">0</strong>
-        </span>
+      <div class="header-center-bar">
+        <div class="search-input-wrap header-search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="global-keyword-search" class="input-control" placeholder="Tìm nhanh từ khóa, số câu (VD: 115, bảo lãnh, 500 triệu)..." />
+        </div>
+
+        <div class="header-stats-bar">
+          <span class="mini-stat success" onclick="openSpeedWithFilter('MASTERED')" style="cursor:pointer;" title="Số câu bạn đã đánh dấu thuộc lòng">
+            ✅ Thuộc: <strong id="hdr-mastered">0</strong>/340
+          </span>
+          <span class="mini-stat danger" onclick="openSpeedWithFilter('TRAP')" style="cursor:pointer;" title="Bấm để xem 72 câu bẫy dễ sai nhất">
+            🔥 72 Bẫy
+          </span>
+          <span class="mini-stat danger" onclick="openPracticeWithFilter('WRONG')" style="cursor:pointer;" title="Số câu bạn từng chọn sai">
+            ❌ Sai: <strong id="hdr-wrong">0</strong>
+          </span>
+          <span class="mini-stat warning" onclick="openSpeedWithFilter('BOOKMARKED')" style="cursor:pointer;" title="Số câu bạn đánh dấu sao">
+            ⭐ Lưu: <strong id="hdr-bookmarked">0</strong>
+          </span>
+        </div>
       </div>
 
       <div class="header-actions">
-        <div class="search-input-wrap" style="min-width: 210px; max-width: 260px;">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="global-keyword-search" class="input-control" style="padding: 6px 10px 6px 32px; font-size: 13px;" placeholder="Tìm nhanh từ khóa / số câu..." />
-        </div>
-        <button class="btn btn-sm btn-outline-primary" id="btn-mobile-view-toggle" title="Chuyển đổi giao diện Điện thoại / Máy tính">
-          📱 Giao diện Mobile
-        </button>
         <button class="btn btn-sm btn-primary" id="btn-open-qr-modal" title="Quét mã QR hoặc tải bản Mobile Offline về điện thoại">
-          📲 Mở trên Điện thoại
+          📲 App Điện thoại
         </button>
-        <button class="btn btn-sm" id="btn-theme-toggle" title="Đổi giao diện Sáng / Tối">
-          🌙 Tối
+        <button class="btn btn-sm btn-outline-primary" id="btn-mobile-view-toggle" title="Chuyển đổi giao diện Điện thoại / Máy tính">
+          📱 Mobile
+        </button>
+        <button class="btn btn-sm" id="btn-theme-toggle" title="Đổi giao diện Galaxy Tối / Sáng">
+          ☀️ Sáng
         </button>
         <button class="btn btn-sm" id="btn-reset-progress" title="Xóa tiến độ học để học lại từ đầu">
           🔄
@@ -2115,26 +2544,28 @@ body.mobile-view .quansu-window {
       </div>
     </div>
 
-    <nav class="nav-tabs">
-      <button class="nav-tab active" data-tab="tab-dashboard">
-        📊 Tổng Quan & Chủ Đề
-      </button>
-      <button class="nav-tab" data-tab="tab-tips">
-        💡 Bí Kíp & Mẹo Nhớ Nhanh <span class="nav-badge">HOT</span>
-      </button>
-      <button class="nav-tab" data-tab="tab-speed">
-        ⚡ Học Siêu Tốc 340 Câu
-      </button>
-      <button class="nav-tab" data-tab="tab-flashcard">
-        🗂️ Flashcard Lật Thẻ
-      </button>
-      <button class="nav-tab" data-tab="tab-practice">
-        🎯 Luyện Tập Từng Câu
-      </button>
-      <button class="nav-tab" data-tab="tab-exam">
-        📝 Thi Thử (Xáo Trộn Câu)
-      </button>
-    </nav>
+    <div class="nav-tabs-wrapper">
+      <nav class="nav-tabs">
+        <button class="nav-tab active" data-tab="tab-dashboard">
+          📊 Tổng Quan
+        </button>
+        <button class="nav-tab" data-tab="tab-tips">
+          💡 Bí Kíp & Lụi Chuẩn <span class="nav-badge">HOT</span>
+        </button>
+        <button class="nav-tab" data-tab="tab-speed">
+          ⚡ Học Siêu Tốc 340 Câu
+        </button>
+        <button class="nav-tab" data-tab="tab-flashcard">
+          🗂️ Thẻ Lật Flashcard
+        </button>
+        <button class="nav-tab" data-tab="tab-practice">
+          🎯 Luyện Từng Câu
+        </button>
+        <button class="nav-tab" data-tab="tab-exam">
+          📝 Phòng Thi Thử
+        </button>
+      </nav>
+    </div>
   </header>
 
   <!-- Main Content -->
@@ -2143,34 +2574,39 @@ body.mobile-view .quansu-window {
     <section id="tab-dashboard" class="tab-panel active">
       <div class="hero-banner">
         <div class="hero-content">
-          <h2>Bí quyết thuộc làu 340 câu Đấu thầu trong thời gian ngắn nhất!</h2>
+          <div class="hero-eyebrow">🌌 HỆ THỐNG ÔN THI THÔNG MINH • CẬP NHẬT MỚI NHẤT 2025</div>
+          <h2>Chinh phục 340 câu Chứng chỉ Đấu thầu trong thời gian ngắn nhất</h2>
           <p>
-            Hệ thống tích hợp đủ <strong>340 câu chuẩn của Cục Quản lý đấu thầu</strong> kèm theo <strong>Từ khóa vàng tô sáng</strong>, <strong>Mẹo ghi nhớ 3 giây</strong>, <strong>72 câu bẫy dễ sai nhất</strong> và <strong>Giải thích pháp lý dễ hiểu</strong>.
+            Tích hợp <strong>Từ khóa vàng tô sáng 3 giây</strong>, <strong>Bộ lọc 72 câu bẫy dễ sai nhất</strong>, <strong>Phễu chiến thuật lụi chuẩn 94,2%</strong> và <strong>Quân Sư AI</strong> giải thích trực quan từng câu.
           </p>
           <div class="hero-actions">
-            <button class="btn btn-lg btn-white" onclick="openSpeedWithFilter('TRAP')">
-              🔥 Học 72 Câu Bẫy Dễ Sai
+            <button class="btn btn-lg btn-galaxy-cta" onclick="openSpeedWithFilter('TRAP')">
+              🔥 Học Ngay 72 Câu Bẫy
             </button>
-            <button class="btn btn-lg btn-glass" onclick="switchTab('tab-tips')">
-              💡 Bảng Mẹo Con Số & Bẫy
-            </button>
-            <button class="btn btn-lg btn-glass" onclick="startTrapExam()">
-              📝 Thi Thử 72 Câu Bẫy
-            </button>
-            <button class="btn btn-lg btn-glass" onclick="startQuickExam(60, 60)">
+            <button class="btn btn-lg btn-white" onclick="startQuickExam(60, 60)">
               🏆 Thi Thử Chuẩn 60 Câu
             </button>
-            <a class="btn btn-lg btn-glass" href="On_Thi_Dau_Thau_340_Mobile_Offline.html" download>
-              📱 Tải File App Mobile Offline
+            <button class="btn btn-lg btn-glass" onclick="switchTab('tab-tips')">
+              💡 Bí Kíp & Lụi Chuẩn
+            </button>
+            <button class="btn btn-lg btn-glass" onclick="startTrapExam()">
+              📝 Đề Kiểm Tra 72 Câu Bẫy
+            </button>
+          </div>
+
+          <div class="hero-downloads-bar">
+            <span class="hero-dl-label">📥 Tài liệu in & Offline:</span>
+            <a class="hero-dl-chip" href="On_Thi_Dau_Thau_340_Mobile_Offline.html" download>
+              📱 File App Mobile Offline
             </a>
-            <a class="btn btn-lg btn-glass" href="3_Bo_72_Cau_Hoi_De_Sai_Va_Nhieu_Bay_Nhat.docx" download>
+            <a class="hero-dl-chip" href="3_Bo_72_Cau_Hoi_De_Sai_Va_Nhieu_Bay_Nhat.docx" download>
               🔥 Word 72 Câu Bẫy (.docx)
             </a>
-            <a class="btn btn-lg btn-glass" href="1_Tai_Lieu_Hoc_Ly_Thuyet_Va_Meo_Nho_340_Cau_Dau_Thau.docx" download>
+            <a class="hero-dl-chip" href="1_Tai_Lieu_Hoc_Ly_Thuyet_Va_Meo_Nho_340_Cau_Dau_Thau.docx" download>
               📄 Word Lý Thuyết (.docx)
             </a>
-            <a class="btn btn-lg btn-glass" href="2_Bo_De_Trac_Nghiem_340_Cau_In_Tiet_Kiem_Giay.docx" download>
-              🖨️ Word Trắc Nghiệm (.docx)
+            <a class="hero-dl-chip" href="2_Bo_De_Trac_Nghiem_340_Cau_In_Tiet_Kiem_Giay.docx" download>
+              🖨️ Word Trắc Nghiệm 2 Cột (.docx)
             </a>
           </div>
         </div>
@@ -2692,6 +3128,69 @@ body.mobile-view .quansu-window {
       </div>
     </section>
   </main>
+
+  <!-- Galaxy Footer: Author Credit (by Aether - 0961.860.865) & Viettel Tammi Call-to-Action + QR -->
+  <footer class="galaxy-footer">
+    <div class="galaxy-footer-inner">
+      <div class="tammi-showcase-card">
+        <div class="tammi-content-col">
+          <div class="tammi-badge-row">
+            <span class="tammi-brand-pill">🇻🇳 VIETTEL TAMMI • SIÊU ỨNG DỤNG THUẦN VIỆT</span>
+            <span class="tammi-sub-pill">1 Tammi = 30+ Mini Apps</span>
+          </div>
+          <h3 class="tammi-headline">
+            🌟 Cùng Lan Tỏa <span>Viettel Tammi</span> – Nền Tảng Kết Nối & Cuộc Sống Số Việt Nam!
+          </h3>
+          <p class="tammi-desc">
+            Nếu phần mềm ôn thi <strong>340 câu Chứng chỉ Đấu thầu</strong> này giúp bạn tiết kiệm thời gian và tự tin vượt qua kỳ thi, hãy ủng hộ tác giả bằng một hành động nhỏ: <strong>Quét mã QR tải trải nghiệm Viettel Tammi</strong> và <strong>chia sẻ, lan tỏa Tammi</strong> đến bạn bè, đồng nghiệp, gia đình cùng sử dụng! Mỗi lượt tải và giới thiệu của bạn là động lực lớn góp phần xây dựng nền tảng công nghệ thuần Việt của Viettel ngày càng vững mạnh.
+          </p>
+
+          <div class="tammi-features-grid">
+            <div class="tammi-feat-item">💬 <strong>OTT Bảo mật:</strong> Nhắn tin, Gọi thoại/Video Call miễn phí</div>
+            <div class="tammi-feat-item">🎥 <strong>Họp trực tuyến:</strong> Lên đến 500 người, Cộng đồng số 100.000 thành viên</div>
+            <div class="tammi-feat-item">🤖 <strong>Trợ lý AI & Tri thức:</strong> AI Assistant, Prep Talk & 2.000+ Sách nói Tammi Books</div>
+            <div class="tammi-feat-item">🎁 <strong>Đặc quyền hấp dẫn:</strong> Miễn phí Data Viettel, tặng 5GB Cloud & Chữ ký số MySign</div>
+          </div>
+
+          <div class="tammi-cta-row">
+            <a href="https://tammi.vn/download-app" target="_blank" rel="noopener noreferrer" class="btn btn-tammi-download">
+              📲 Tải App Viettel Tammi Ngay (iOS / Android)
+            </a>
+            <button type="button" class="btn btn-tammi-share" id="btn-share-tammi" onclick="shareTammiApp()">
+              📢 Sao chép Link & Lan tỏa Tammi
+            </button>
+          </div>
+        </div>
+
+        <div class="tammi-qr-col">
+          <div class="tammi-qr-box">
+            <div class="tammi-qr-label-top">QUÉT QR TẢI TAMMI</div>
+            <a href="https://tammi.vn/download-app" target="_blank" rel="noopener noreferrer" title="Quét QR hoặc bấm để tải Viettel Tammi">
+              <div class="tammi-qr-svg-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="136" height="136" viewBox="0 0 124 124" class="segno"><path transform="scale(4)" class="qrline" stroke="#0f172a" d="M1 1.5h7m3 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h7m-29 1h1m5 0h1m1 0h1m2 0h4m1 0h3m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h3m4 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m4 0h2m4 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h1m7 0h2m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h2m1 0h2m3 0h1m2 0h1m-20 1h3m1 0h2m2 0h1m1 0h2m1 0h6m6 0h2m-27 1h1m5 0h1m3 0h1m2 0h1m2 0h1m1 0h7m2 0h1m-28 1h2m1 0h3m2 0h2m3 0h5m3 0h2m2 0h2m-28 1h1m7 0h1m3 0h4m2 0h3m2 0h2m3 0h1m-27 1h1m2 0h2m1 0h1m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m2 0h3m-27 1h1m6 0h1m1 0h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m-29 1h1m1 0h2m1 0h2m6 0h4m2 0h1m1 0h1m1 0h3m1 0h2m-28 1h2m5 0h3m1 0h2m4 0h1m1 0h1m1 0h1m1 0h2m2 0h1m-28 1h1m4 0h5m1 0h2m2 0h2m2 0h2m1 0h3m1 0h2m-26 1h1m3 0h1m3 0h4m1 0h2m5 0h1m2 0h1m-27 1h1m1 0h2m2 0h3m3 0h2m1 0h2m1 0h1m3 0h1m2 0h2m-25 1h1m4 0h1m1 0h2m3 0h1m2 0h2m2 0h2m1 0h4m-27 1h3m2 0h1m2 0h1m1 0h1m1 0h1m2 0h2m1 0h6m1 0h2m-20 1h1m2 0h1m2 0h1m1 0h1m1 0h3m3 0h2m1 0h2m-29 1h7m4 0h2m4 0h1m1 0h2m1 0h1m1 0h1m1 0h1m-27 1h1m5 0h1m1 0h1m2 0h5m4 0h1m3 0h1m-25 1h1m1 0h3m1 0h1m3 0h3m2 0h1m2 0h1m1 0h7m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h5m3 0h1m2 0h1m4 0h4m-28 1h1m1 0h3m1 0h1m1 0h11m1 0h1m2 0h1m2 0h1m1 0h1m-29 1h1m5 0h1m1 0h2m2 0h2m2 0h1m1 0h1m1 0h2m2 0h2m1 0h1m-28 1h7m5 0h2m1 0h2m1 0h4m1 0h1m3 0h1"/></svg>
+              </div>
+            </a>
+            <div class="tammi-store-badges">
+              <span>🍎 App Store</span>
+              <span>•</span>
+              <span>▶️ Google Play</span>
+            </div>
+            <div class="tammi-qr-url">tammi.vn/download-app</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-credit-bar">
+        <div class="aether-signature">
+          <span class="aether-orb">🌌</span>
+          <span>by <strong>Aether</strong> - <a href="tel:0961860865" class="aether-phone">0961.860.865</a></span>
+        </div>
+        <div class="footer-meta-note">
+          Hệ thống Ôn thi Chứng chỉ Nghiệp vụ Chuyên môn về Đấu thầu (340 Câu Cục QLĐT) • Phiên bản Galaxy 2025
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <!-- Mobile Sticky Action Bar (Shown on Mobile during Practice or Active Exam) -->
   <div class="mobile-action-bar" id="mobile-action-bar">
@@ -9849,7 +10348,7 @@ window.QUESTIONS_DATA = [
     } catch (e) {
       console.warn("Could not load progress:", e);
     }
-    applyTheme(userProgress.theme || "light");
+    applyTheme(userProgress.galaxyTheme || "dark");
   }
 
   function saveProgress() {
@@ -9863,12 +10362,46 @@ window.QUESTIONS_DATA = [
 
   function applyTheme(theme) {
     userProgress.theme = theme;
+    userProgress.galaxyTheme = theme;
     document.documentElement.setAttribute("data-theme", theme);
     const btn = document.getElementById("btn-theme-toggle");
     if (btn) {
-      btn.innerHTML = theme === "dark" ? "☀️ Giao diện sáng" : "🌙 Giao diện tối";
+      btn.innerHTML = theme === "dark" ? "☀️ Sáng" : "🌌 Galaxy";
     }
   }
+
+  window.shareTammiApp = function () {
+    const shareTitle = "Viettel Tammi - Siêu ứng dụng Kết nối & Cuộc sống số Việt Nam";
+    const shareText =
+      "🌟 Mời bạn tải trải nghiệm siêu ứng dụng thuần Việt Viettel Tammi (Nhắn tin/Gọi OTT bảo mật, Họp trực tuyến 500 người, Trợ lý AI, 2.000+ sách nói Tammi Books & miễn phí Data Viettel): https://tammi.vn/download-app";
+    const shareUrl = "https://tammi.vn/download-app";
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl
+        })
+        .catch(() => {});
+      return;
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        const btn = document.getElementById("btn-share-tammi");
+        if (btn) {
+          const orig = btn.innerHTML;
+          btn.innerHTML = "✅ Đã sao chép lời mời & link tải Tammi!";
+          setTimeout(() => {
+            btn.innerHTML = orig;
+          }, 2800);
+        }
+      });
+    } else {
+      window.open(shareUrl, "_blank");
+    }
+  };
 
   // Initialize Data
   function initApp() {

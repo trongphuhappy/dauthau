@@ -1,4 +1,4 @@
-const CACHE_NAME = "dauthau-340-v4";
+const CACHE_NAME = "dauthau-340-v5";
 const ASSETS = [
   "./",
   "./index.html",
